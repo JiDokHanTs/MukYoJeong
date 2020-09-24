@@ -2,7 +2,6 @@ package com.jidokhants.mukyojeong;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,7 +23,6 @@ import com.google.android.gms.tasks.Task;
 import com.kakao.auth.Session;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.response.model.UserAccount;
 
 
 public class AfterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -109,7 +107,7 @@ public class AfterActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.btn_logout:
                 signOut();
-                Intent intent = new Intent(AfterActivity.this, MainActivity.class);
+                Intent intent = new Intent(AfterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             case R.id.btn_revoke:
