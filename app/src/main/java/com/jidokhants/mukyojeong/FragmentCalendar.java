@@ -22,7 +22,7 @@ public class FragmentCalendar extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         ViewPager vpPager = (ViewPager) view.findViewById(R.id.vpPager);
-        adapterViewPager = new MyPagerAdapter(getFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
         vpPager.setAdapter(adapterViewPager);
 
         return view;
@@ -55,3 +55,4 @@ public class FragmentCalendar extends Fragment {
         }
     }
 }
+
