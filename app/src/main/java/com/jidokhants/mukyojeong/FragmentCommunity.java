@@ -99,7 +99,7 @@ public class FragmentCommunity extends Fragment implements View.OnClickListener 
 
         switch (v.getId()){
             case R.id.cmnt_btn_today:
-                ((MainActivity)getActivity()).replaceCommunityFragment(1, FragmentFeed.newInstance());
+                ((MainActivity)getActivity()).replaceCommunityFragment(1, FragmentCalendar2.newInstance());
                 break;
             case R.id.cmnt_btn_week:
                 ((MainActivity)getActivity()).replaceCommunityFragment(2, FragmentFeed.newInstance());
