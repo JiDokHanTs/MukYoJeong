@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/community_searchbox"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:inputType="text"
+        android:hint="Search.."
+        android:textSize="20sp"
+        android:layout_marginLeft="20sp"
+        android:background="@null"
+        android:layout_weight="9" />
+
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
+
+</LinearLayout>
