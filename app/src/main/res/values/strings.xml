@@ -3,4 +3,6 @@
     <string name="facebook_app_id">617300055601203</string>
     <string name="fb_login_protocol_scheme">fb617300055601203</string>
     <string name="kakao_app_key">e96e5342b7c68afd152fe62b6c9e526c</string>
+    <string name="navigation_drawer_open">navigation drawer opened!</string>
+    <string name="navigation_drawer_close">navigation drawer closed!</string>
 </resources>
