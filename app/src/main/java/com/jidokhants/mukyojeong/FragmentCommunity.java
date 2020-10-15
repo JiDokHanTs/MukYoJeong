@@ -60,7 +60,7 @@ public class FragmentCommunity extends Fragment implements View.OnClickListener 
                 Log.d("searchButton", "clicked");
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.0.18:3000/")
+                        .baseUrl("http://220.93.66.28:3000/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
