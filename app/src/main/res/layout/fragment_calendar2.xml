@@ -9,7 +9,6 @@
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="?attr/actionBarSize"
         app:buttonLeft_drawableTintColor="@android:color/white"
         app:buttonRight_drawableTintColor="@android:color/white"
         app:expandIconColor="@android:color/white"
