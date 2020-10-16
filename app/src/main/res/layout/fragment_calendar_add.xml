@@ -4,53 +4,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginVertical="?attr/actionBarSize"
+    android:background="@color/colorBackground">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_breakfast"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="63dp" />
+        android:background="@drawable/insert_diet_box1"
+        android:paddingHorizontal="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_lunch"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="63dp" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/calendar_breakfast"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="-12dp"
+            tools:layout_editor_absoluteY="26dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_dinner"
-        tools:layout_editor_absoluteX="232dp"
-        tools:layout_editor_absoluteY="63dp" />
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/calendar_lunch"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="124dp"
+            tools:layout_editor_absoluteY="63dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_snack"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="187dp" />
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/calendar_dinner"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="232dp"
+            tools:layout_editor_absoluteY="63dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_water"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="190dp" />
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/calendar_snack"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="187dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/calendar_alcohol"
-        tools:layout_editor_absoluteX="236dp"
-        tools:layout_editor_absoluteY="190dp" />
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/calendar_water"
+            tools:layout_editor_absoluteX="132dp"
+            tools:layout_editor_absoluteY="190dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/calendar_alcohol"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="236dp"
+            tools:layout_editor_absoluteY="190dp" />
+    </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/insert_diet_box2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"></LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
