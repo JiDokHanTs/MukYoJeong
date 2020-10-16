@@ -1,6 +1,8 @@
 package com.jidokhants.mukyojeong;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -16,6 +18,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -109,7 +118,62 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        try {
+            if(!isExistFoodDB()){
+                copyFoodDB();
+            }
+        }catch (Exception e){
+        }
+    }
+    public boolean isExistFoodDB(){
+        String FILEPATH ="/data/data/" + getPackageName()+"/databases/"+"food_db.db";
+        File file = new File(FILEPATH);
+        if(file.exists()){
+            return true;
+        }
+        return false;
+    }
+    public void copyFoodDB(){
+        Log.d("FoodDBCopy", "called");
+        AssetManager assetManager = getApplicationContext().getAssets();
+        String folderPath = "/data/data/" + getPackageName() + "/databases";
+        String filePath = "/data/data/"+getPackageName()+"/databases/food_db.db";
 
+        File folder = new File(folderPath);
+        File file = new File(filePath);
+
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        try {
+            InputStream is = assetManager.open("databases/"+"food_db.db");
+            BufferedInputStream bis = new BufferedInputStream(is);
+
+            if (!folder.exists()){
+                folder.mkdirs();
+            }
+            if(file.exists()){
+                file.delete();
+                file.createNewFile();
+            }
+
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            int read = -1;
+            byte[] buffer = new byte[1024];
+            while((read = bis.read(buffer, 0, 1024))!= -1){
+                bos.write(buffer, 0, read);
+            }
+
+            bos.flush();
+
+            bos.close();
+            fos.close();
+            bis.close();
+            is.close();
+
+        } catch (IOException e){
+            Log.e("ErrorMessage : " , e.getMessage());
+        }
     }
     @Override
     public void onBackPressed() {

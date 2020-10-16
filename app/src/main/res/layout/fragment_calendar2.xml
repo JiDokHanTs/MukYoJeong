@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        android:id="@+id/cal_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:buttonLeft_drawableTintColor="@android:color/white"
