@@ -18,43 +18,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/cal_button_selector1"
             android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector1"
             android:scaleType="fitCenter"
-            android:textOn=""
-            android:textOff=""/>
+            android:textOff=""
+            android:textOn="" />
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/cal_button_selector2"
             android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector2"
             android:scaleType="fitCenter"
-            android:textOn=""
-            android:textOff=""/>
+            android:textOff=""
+            android:textOn="" />
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/cal_button_selector3"
             android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector3"
             android:scaleType="fitCenter"
-            android:textOn=""
-            android:textOff=""/>
+            android:textOff=""
+            android:textOn="" />
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@drawable/cal_button_selector4"
             android:adjustViewBounds="true"
@@ -62,10 +62,10 @@
             android:textOn=""
             android:textOff=""/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="@drawable/cal_button_selector5"
@@ -73,10 +73,10 @@
             android:textOn=""
             android:textOff=""/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/toggleButton6"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="@drawable/cal_button_selector6"
