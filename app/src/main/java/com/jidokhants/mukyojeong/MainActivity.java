@@ -184,6 +184,13 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    public void replaceCalendarFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment).commit();
+    }
+
     public void replaceCommunityFragment(int cmntSign, Fragment fragment){
         Bundle args = new Bundle();
         args.putInt("CMNT_SIGN", cmntSign);

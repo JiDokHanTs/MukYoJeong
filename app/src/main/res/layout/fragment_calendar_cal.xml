@@ -54,7 +54,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_breakfast"
+                app:srcCompat="@drawable/calendar_breakfast_select_off"
                 android:layout_weight="2"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -74,7 +74,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_lunch"
+                app:srcCompat="@drawable/calendar_lunch_select_off"
                 android:layout_weight="2"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -94,7 +94,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_dinner"
+                app:srcCompat="@drawable/calendar_dinner_select_off"
                 android:layout_weight="2"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -114,7 +114,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_snack"
+                app:srcCompat="@drawable/calendar_snack_select_off"
                 android:layout_weight="2"/>
 
             <androidx.recyclerview.widget.RecyclerView
