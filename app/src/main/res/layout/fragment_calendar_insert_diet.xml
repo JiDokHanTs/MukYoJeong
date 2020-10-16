@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginVertical="?attr/actionBarSize"
     android:background="@color/colorBackground">
 
     <LinearLayout
@@ -19,87 +18,84 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <ToggleButton
+            android:id="@+id/toggleButton1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/calendar_breakfast"
+            android:background="@drawable/cal_button_selector1"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            tools:layout_editor_absoluteX="-12dp"
-            tools:layout_editor_absoluteY="26dp" />
+            android:textOn=""
+            android:textOff=""/>
 
-        <ImageButton
-            android:id="@+id/imageButton2"
+        <ToggleButton
+            android:id="@+id/toggleButton2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/calendar_lunch"
+            android:background="@drawable/cal_button_selector2"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            tools:layout_editor_absoluteX="124dp"
-            tools:layout_editor_absoluteY="63dp" />
+            android:textOn=""
+            android:textOff=""/>
 
-        <ImageButton
-            android:id="@+id/imageButton3"
+        <ToggleButton
+            android:id="@+id/toggleButton3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/calendar_dinner"
+            android:background="@drawable/cal_button_selector3"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            tools:layout_editor_absoluteX="232dp"
-            tools:layout_editor_absoluteY="63dp" />
+            android:textOn=""
+            android:textOff=""/>
 
-        <ImageButton
-            android:id="@+id/imageButton4"
+        <ToggleButton
+            android:id="@+id/toggleButton4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/calendar_snack"
+            android:background="@drawable/cal_button_selector4"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="187dp" />
+            android:textOn=""
+            android:textOff=""/>
 
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="0dp"
-            android:layout_height="78dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/calendar_water"
-            tools:layout_editor_absoluteX="132dp"
-            tools:layout_editor_absoluteY="190dp" />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
+        <ToggleButton
+            android:id="@+id/toggleButton5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/calendar_alcohol"
             android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector5"
             android:scaleType="fitCenter"
-            tools:layout_editor_absoluteX="236dp"
-            tools:layout_editor_absoluteY="190dp" />
+            android:textOn=""
+            android:textOff=""/>
+
+        <ToggleButton
+            android:id="@+id/toggleButton6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector6"
+            android:scaleType="fitCenter"
+            android:textOn=""
+            android:textOff=""/>
     </LinearLayout>
 
       <LinearLayout
         android:layout_width="0dp"
         android:layout_height="420dp"
-
         android:layout_marginBottom="2dp"
         android:background="@drawable/insert_diet_box2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+
+      </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,6 +88,15 @@ public class FragmentCalendarCal extends Fragment {
 
         CalendarTextAdapter adapter = new CalendarTextAdapter(list);
         rv_breakfast.setAdapter(adapter);
+
+        ImageButton btn_add = view.findViewById(R.id.btn_add_cal);
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).replaceCalendarFragment(FragmentInsertDiet.newInstance());
+            }
+        });
 
         return view;
     }
