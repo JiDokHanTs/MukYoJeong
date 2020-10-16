@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public boolean isExistFoodDB(){
-        String FILEPATH ="/data/data/" + getPackageName()+"/databases/"+"food_db.db";
+        String FILEPATH ="/data/data/" + getPackageName()+"/databases/"+"mukyojeong.db";
         File file = new File(FILEPATH);
         if(file.exists()){
             return true;
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("FoodDBCopy", "called");
         AssetManager assetManager = getApplicationContext().getAssets();
         String folderPath = "/data/data/" + getPackageName() + "/databases";
-        String filePath = "/data/data/"+getPackageName()+"/databases/food_db.db";
+        String filePath = "/data/data/"+getPackageName()+"/databases/mukyojeong.db";
 
         File folder = new File(folderPath);
         File file = new File(filePath);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         try {
-            InputStream is = assetManager.open("databases/"+"food_db.db");
+            InputStream is = assetManager.open("databases/"+"mukyojeong.db");
             BufferedInputStream bis = new BufferedInputStream(is);
 
             if (!folder.exists()){
