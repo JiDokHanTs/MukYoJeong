@@ -22,7 +22,6 @@ public class FragmentCalendarCal extends Fragment {
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +29,8 @@ public class FragmentCalendarCal extends Fragment {
 
         final CollapsibleCalendar collapsibleCalendar = view.findViewById(R.id.collapsibleCalendar2);
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
+
+
             @Override
             public void onDaySelect() {
                 Day day = collapsibleCalendar.getSelectedDay();
@@ -54,6 +55,15 @@ public class FragmentCalendarCal extends Fragment {
 
             @Override
             public void onWeekChange(int i) {
+
+            }
+
+            public void onDayChanged() {
+
+            }
+
+
+            public void onClickListener() {
 
             }
         });
