@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
+
+import java.util.ArrayList;
 
 public class FragmentCalendarCal extends Fragment {
 
@@ -57,6 +61,21 @@ public class FragmentCalendarCal extends Fragment {
 
             }
         });
+
+        ArrayList<String> list = new ArrayList<>();
+        for(int i = 0;i<5;i++) {
+            list.add(String.format("식단 %d번 흠냐륑", i));
+        }
+
+        RecyclerView rv_breakfast = view.findViewById(R.id.rv_cal_breakfast);
+        RecyclerView rv_lunch = view.findViewById(R.id.rv_cal_lunch);
+        RecyclerView rv_dinner = view.findViewById(R.id.rv_cal_dinner);
+        RecyclerView rv_snack = view.findViewById(R.id.rv_cal_snack);
+
+        rv_breakfast.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        CalendarTextAdapter adapter = new CalendarTextAdapter(list);
+        rv_breakfast.setAdapter(adapter);
 
         return view;
     }
