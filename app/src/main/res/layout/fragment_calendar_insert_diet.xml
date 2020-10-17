@@ -125,13 +125,13 @@
                   android:src="@drawable/ic_add"
                   android:layout_gravity="center_vertical" />
 
-              <EditText
-                  android:id="@+id/edit_insert_diet"
+              <AutoCompleteTextView
+                  android:id="@+id/auto_complete_insert_diet"
                   android:layout_width="0dp"
                   android:layout_weight="7"
                   android:textSize="20dp"
+                  android:completionThreshold="1"
                   android:layout_height="wrap_content"
-                  android:inputType="text"
                   android:hint="메뉴를 입력하세요." />
 
               <Button
