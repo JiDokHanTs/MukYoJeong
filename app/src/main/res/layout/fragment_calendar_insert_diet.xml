@@ -89,13 +89,62 @@
         android:layout_width="0dp"
         android:layout_height="420dp"
         android:layout_marginBottom="2dp"
+          android:paddingHorizontal="25dp"
         android:background="@drawable/insert_diet_box2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+          android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/text_meal_diet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="오늘의 어쩌구~!"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"/>
 
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_menu_diet"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center_horizontal">
+
+              <ImageView
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:src="@drawable/ic_add"
+                  android:layout_gravity="center_vertical" />
+
+              <EditText
+                  android:id="@+id/edit_insert_diet"
+                  android:layout_width="0dp"
+                  android:layout_weight="7"
+                  android:textSize="20dp"
+                  android:layout_height="wrap_content"
+                  android:inputType="text"
+                  android:hint="메뉴를 입력하세요." />
+
+              <Button
+                  android:id="@+id/btn_add_diet"
+                  android:layout_width="0dp"
+                  android:layout_weight="2"
+                  android:layout_height="35dp"
+                  android:text="추가"
+                  android:textSize="20dp"
+                  android:textColor="@android:color/white"
+                  android:background="@drawable/btn_insert_bg"
+                  android:layout_gravity="center" />
+          </LinearLayout>
 
       </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
