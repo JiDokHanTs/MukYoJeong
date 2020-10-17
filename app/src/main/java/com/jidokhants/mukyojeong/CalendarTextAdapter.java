@@ -1,18 +1,20 @@
 package com.jidokhants.mukyojeong;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.xml.XMLConstants;
 
 public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapter.ViewHolder> {
 
@@ -25,7 +27,7 @@ public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapte
             super(itemView);
 
             textView = itemView.findViewById(R.id.tv_rv);
-        }
+           }
     }
 
     CalendarTextAdapter(ArrayList<String> list) {
@@ -37,16 +39,18 @@ public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapte
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = inflater.inflate(R.layout.cal_recyclerview_item, parent, false);
         CalendarTextAdapter.ViewHolder vh = new CalendarTextAdapter.ViewHolder(view);
 
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(CalendarTextAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final CalendarTextAdapter.ViewHolder holder, final int position) {
         String text = mData.get(position);
         holder.textView.setText(text);
+
+
     }
 
     @Override
