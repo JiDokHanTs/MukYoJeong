@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jidokhants.mukyojeong.model.Food;
+
 import java.util.ArrayList;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -28,6 +32,9 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     Button[] toggleButtons = new Button[6];
     int toggleButtonClickedId;
 
+    private MukDBHelper mukDBHelper;
+    ArrayList<Food> foodList;
+
     public static FragmentInsertDiet newInstance() {
         return new FragmentInsertDiet();
     }
@@ -35,13 +42,12 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
         final View view =  inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
 
         final ArrayList<String> Items = new ArrayList<>();
 
         TextView tv_meal = view.findViewById(R.id.text_meal_diet);
-        final EditText edit_diet = view.findViewById(R.id.edit_insert_diet);
+        final AutoCompleteTextView autoCompleteInsertText = view.findViewById(R.id.auto_complete_insert_diet);
         Button btn_add = view.findViewById(R.id.btn_add_diet);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_menu_diet);
@@ -53,22 +59,34 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
         toggleButtons[3] = view.findViewById(R.id.toggleButton4);
         toggleButtons[4] = view.findViewById(R.id.toggleButton5);
         toggleButtons[5] = view.findViewById(R.id.toggleButton6);
+
         final CalendarInsertDietAdapter adapter = new CalendarInsertDietAdapter(Items);
         recyclerView.setAdapter(adapter);
+
+        mukDBHelper = MukDBHelper.getInstance(getContext());
+        foodList = mukDBHelper.getAllFood();
+        String[] foodNameList = new String[foodList.size()];
+
+        for (int i = 0; i < foodList.size();i++){
+            foodNameList[i] = foodList.get(i).getName();
+        }
+        ArrayAdapter<String> autoCompleteTestAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, foodNameList);
+        autoCompleteInsertText.setAdapter(autoCompleteTestAdapter);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str_item = edit_diet.getText().toString();
+                String str_item = autoCompleteInsertText.getText().toString();
                 if(str_item.length()==0) {
                     Toast.makeText(getContext(), "식단을 입력해주쇼~!", Toast.LENGTH_SHORT).show();
-                    edit_diet.clearFocus();
+                    autoCompleteInsertText.clearFocus();
                 }
                 else {
                     Items.add(str_item);
                     adapter.notifyDataSetChanged();
-                    edit_diet.setText("");
-                    edit_diet.clearFocus();
+                    autoCompleteInsertText.setText("");
+                    autoCompleteInsertText.clearFocus();
                     Toast.makeText(getApplicationContext(), "'"+str_item +"'"+ " 메뉴가 추가됨!.", Toast.LENGTH_SHORT).show();
                 }
             }
