@@ -2,9 +2,11 @@ package com.jidokhants.mukyojeong;
 
 import android.content.ClipData;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -28,13 +30,14 @@ import java.util.ArrayList;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class FragmentInsertDiet extends Fragment implements View.OnClickListener{
+public class FragmentInsertDiet extends Fragment implements View.OnClickListener {
     Button[] toggleButtons = new Button[6];
     int toggleButtonClickedId;
 
     private MukDBHelper mukDBHelper;
     ArrayList<Food> foodList;
 
+    Food selectedFood;
     public static FragmentInsertDiet newInstance() {
         return new FragmentInsertDiet();
     }
@@ -42,11 +45,12 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view =  inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
+        final View view = inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
 
         final ArrayList<String> Items = new ArrayList<>();
 
         TextView tv_meal = view.findViewById(R.id.text_meal_diet);
+
         final AutoCompleteTextView autoCompleteInsertText = view.findViewById(R.id.auto_complete_insert_diet);
         Button btn_add = view.findViewById(R.id.btn_add_diet);
 
@@ -65,29 +69,37 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
         mukDBHelper = MukDBHelper.getInstance(getContext());
         foodList = mukDBHelper.getAllFood();
-        String[] foodNameList = new String[foodList.size()];
+//        final String[] foodNameList = new String[foodList.size()];
 
-        for (int i = 0; i < foodList.size();i++){
-            foodNameList[i] = foodList.get(i).getName();
-        }
-        ArrayAdapter<String> autoCompleteTestAdapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, foodNameList);
+//        for (int i = 0; i < foodList.size();i++){
+//            if (!foodList.get(i).getCommercial().equals("품목대표")){
+//                foodNameList[i] = foodList.get(i).getName()+"("+foodList.get(i).getFrom()+")";
+//            }else{
+//                foodNameList[i] = foodList.get(i).getName();
+//            }
+//        }
+        final AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getContext(), foodList);
         autoCompleteInsertText.setAdapter(autoCompleteTestAdapter);
-
+        autoCompleteInsertText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedFood = autoCompleteTestAdapter.getItem(position);
+                Log.d("selectedFoodInfo", selectedFood.getName()+": "+selectedFood.getCalorie()+"kcal");
+            }
+        });
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str_item = autoCompleteInsertText.getText().toString();
-                if(str_item.length()==0) {
+                if (str_item.length() == 0) {
                     Toast.makeText(getContext(), "식단을 입력해주쇼~!", Toast.LENGTH_SHORT).show();
                     autoCompleteInsertText.clearFocus();
-                }
-                else {
+                } else {
                     Items.add(str_item);
                     adapter.notifyDataSetChanged();
                     autoCompleteInsertText.setText("");
                     autoCompleteInsertText.clearFocus();
-                    Toast.makeText(getApplicationContext(), "'"+str_item +"'"+ " 메뉴가 추가됨!.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "'" + str_item + "'" + " 메뉴가 추가됨!.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -103,7 +115,7 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             default:
                 if (v.getId() != toggleButtonClickedId || v.isSelected()) {
                     for (int i = 0; i < toggleButtons.length; i++) {

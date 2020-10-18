@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInsertDietAdapter.ViewHolder> {
 
     private ArrayList<String> mData = null;
+    Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView, minus, plus;
@@ -40,7 +42,7 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
 
     @Override
     public CalendarInsertDietAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.diet_recyclerview_item, parent, false);
@@ -57,8 +59,12 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
         holder.minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Double cnt = (Double.parseDouble(holder.editCount.getText().toString()) -1);
-                holder.editCount.setText(cnt+"");
+                if ((Double.parseDouble(holder.editCount.getText().toString())) == 0.0){
+                    Toast.makeText(context, "0 이하로 입력할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Double cnt = (Double.parseDouble(holder.editCount.getText().toString()) -1);
+                    holder.editCount.setText(cnt+"");
+                }
             }
         });
 

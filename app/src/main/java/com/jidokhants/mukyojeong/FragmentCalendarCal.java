@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class FragmentCalendarCal extends Fragment {
-
+    TextView selectedDate;
     public static FragmentCalendarCal newInstance() {
         FragmentCalendarCal fragment = new FragmentCalendarCal();
 
@@ -33,6 +38,11 @@ public class FragmentCalendarCal extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar_cal, container, false);
 
+        selectedDate = view.findViewById(R.id.cal_today_date);
+
+        Date currentTime = Calendar.getInstance().getTime();
+        selectedDate.setText(new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(currentTime));
+
         final CollapsibleCalendar collapsibleCalendar = view.findViewById(R.id.collapsibleCalendar2);
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
 
@@ -42,6 +52,7 @@ public class FragmentCalendarCal extends Fragment {
                 Day day = collapsibleCalendar.getSelectedDay();
                 Log.i(getClass().getName(), "Selected Day: "
                         + day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay());
+                selectedDate.setText(day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay());
             }
 
             @Override
