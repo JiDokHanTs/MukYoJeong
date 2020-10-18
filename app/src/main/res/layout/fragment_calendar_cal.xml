@@ -43,7 +43,8 @@
             android:id="@+id/cal_today_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="date"/>
+            android:layout_marginLeft="10dp"
+            android:text="2020/10/14"/>
 
         <LinearLayout
             android:id="@+id/cal_breakfast"
