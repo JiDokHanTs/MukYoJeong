@@ -85,9 +85,11 @@ public class FragmentCalendarCal extends Fragment {
             }
         });
 
-        ArrayList<String> list = new ArrayList<>();
-        for(int i = 0;i<5;i++) {
-            list.add(String.format("식단 %d번 흠냐륑", i));
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        for(int i = 0;i<10;i++) {
+            list1.add(String.format("아침 식단 %d번 흠냐륑", i));
+            list2.add(String.format("점심 식단 %d번 흠냐륑", i));
         }
 
         RecyclerView rv_breakfast = view.findViewById(R.id.rv_cal_breakfast);
@@ -96,10 +98,13 @@ public class FragmentCalendarCal extends Fragment {
         RecyclerView rv_snack = view.findViewById(R.id.rv_cal_snack);
 
         rv_breakfast.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_lunch.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        CalendarTextAdapter adapter = new CalendarTextAdapter(list);
-        rv_breakfast.setAdapter(adapter);
+        CalendarTextAdapter adapter1 = new CalendarTextAdapter(list1);
+        CalendarTextAdapter adapter2 = new CalendarTextAdapter(list2);
 
+        rv_breakfast.setAdapter(adapter1);
+        rv_lunch.setAdapter(adapter2);
         ImageButton btn_add = view.findViewById(R.id.btn_add_cal);
 
         btn_add.setOnClickListener(new View.OnClickListener() {

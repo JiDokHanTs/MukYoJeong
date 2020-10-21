@@ -1,6 +1,7 @@
 package com.jidokhants.mukyojeong;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.jidokhants.mukyojeong.model.Food;
+import com.jidokhants.mukyojeong.model.FoodItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AutoCompleteAdapter extends ArrayAdapter<Food> {
-    private ArrayList<Food> foodList;
+public class AutoCompleteAdapter extends ArrayAdapter<FoodItem> {
 
-    public AutoCompleteAdapter(@NonNull Context context, @NonNull ArrayList<Food> foodList){
+    private List<FoodItem> foodListFull;
+
+    public AutoCompleteAdapter(@NonNull Context context,  @NonNull ArrayList<FoodItem> foodList) {
         super(context, 0, foodList);
-        this.foodList = new ArrayList<>(foodList);
+        this.foodListFull = new ArrayList<>(foodList);
     }
 
-    @Nullable
-    @Override
-    public Food getItem(int position) {
-        return foodList.get(position);
-    }
 
     @NonNull
     @Override
@@ -38,7 +37,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<Food> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.cal_autocomplete_item, parent, false
             );
@@ -46,15 +45,13 @@ public class AutoCompleteAdapter extends ArrayAdapter<Food> {
             TextView foodName = convertView.findViewById(R.id.auto_food_name);
             TextView foodFrom = convertView.findViewById(R.id.auto_food_from);
 
-            Food foodItem = getItem(position);
+            FoodItem foodItem = getItem(position);
 
-            if(foodItem != null){
-                foodName.setText(foodItem.getName());
-                if(!foodItem.getCommercial().equals("품목대표"))
-                    foodFrom.setText(foodItem.getFrom());
-                else
-                    foodFrom.setText("");
-            }
+            foodName.setText(foodItem.getName());
+            if (!foodItem.getCommercial().equals("품목대표"))
+                foodFrom.setText(foodItem.getFrom());
+            else
+                foodFrom.setText("");
         }
         return convertView;
     }
@@ -63,36 +60,42 @@ public class AutoCompleteAdapter extends ArrayAdapter<Food> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
-            ArrayList<Food> suggestions = new ArrayList<>();
+            List<FoodItem> suggestions = new ArrayList<>();
 
-            if(constraint == null || constraint.length() == 0){
-                suggestions.addAll(foodList);
-            }
-            else{
+            if (constraint == null || constraint.length() == 0) {
+                suggestions.addAll(foodListFull);
+            } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Food item : foodList){
-                    if(item.getName().toLowerCase().contains(filterPattern)){
+                suggestions.clear();
+                for (FoodItem item : foodListFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         suggestions.add(item);
                     }
                 }
             }
-            results.values= suggestions;
+            results.values = suggestions;
             results.count = suggestions.size();
 
             return results;
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            clear();
-            addAll((ArrayList)results.values);
-            notifyDataSetChanged();
+            try {
+                Log.d("customAdapter","called, Hi");
+                clear();
+                addAll((List)results.values);
+                notifyDataSetChanged();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            return ((Food)resultValue).getName();
+            return ((FoodItem) resultValue).getName();
         }
     };
 }
