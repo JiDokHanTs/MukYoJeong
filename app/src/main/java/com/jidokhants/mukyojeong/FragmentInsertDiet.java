@@ -25,8 +25,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jidokhants.mukyojeong.model.Food;
+import com.jidokhants.mukyojeong.model.FoodItem;
+import com.jidokhants.mukyojeong.model.Record;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -35,9 +38,11 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     int toggleButtonClickedId;
 
     private MukDBHelper mukDBHelper;
-    ArrayList<Food> foodList;
+    ArrayList<FoodItem> foodList;
 
-    Food selectedFood;
+    FoodItem selectedFood;
+
+    ArrayList<Record> Items;
     public static FragmentInsertDiet newInstance() {
         return new FragmentInsertDiet();
     }
@@ -47,7 +52,7 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
 
-        final ArrayList<String> Items = new ArrayList<>();
+        Items = new ArrayList<>();
 
         TextView tv_meal = view.findViewById(R.id.text_meal_diet);
 
@@ -64,27 +69,25 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
         toggleButtons[4] = view.findViewById(R.id.toggleButton5);
         toggleButtons[5] = view.findViewById(R.id.toggleButton6);
 
+        mukDBHelper = MukDBHelper.getInstance(getContext());
+
+        Items= mukDBHelper.getRecord("20201015", 1);
         final CalendarInsertDietAdapter adapter = new CalendarInsertDietAdapter(Items);
         recyclerView.setAdapter(adapter);
 
-        mukDBHelper = MukDBHelper.getInstance(getContext());
-        foodList = mukDBHelper.getAllFood();
-//        final String[] foodNameList = new String[foodList.size()];
+        foodList = mukDBHelper.getSearchAllFood();
 
-//        for (int i = 0; i < foodList.size();i++){
-//            if (!foodList.get(i).getCommercial().equals("품목대표")){
-//                foodNameList[i] = foodList.get(i).getName()+"("+foodList.get(i).getFrom()+")";
-//            }else{
-//                foodNameList[i] = foodList.get(i).getName();
-//            }
-//        }
-        final AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getContext(), foodList);
+
+        for (int i = 0; i <10; i++){
+            Log.d("foodList", (i+1)+" 번째: "+ foodList.get(i).getName());
+        }
+
+        AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getActivity(), foodList);
         autoCompleteInsertText.setAdapter(autoCompleteTestAdapter);
         autoCompleteInsertText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedFood = autoCompleteTestAdapter.getItem(position);
-                Log.d("selectedFoodInfo", selectedFood.getName()+": "+selectedFood.getCalorie()+"kcal");
+                selectedFood = (FoodItem) parent.getItemAtPosition(position);
             }
         });
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -92,14 +95,20 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
             public void onClick(View view) {
                 String str_item = autoCompleteInsertText.getText().toString();
                 if (str_item.length() == 0) {
-                    Toast.makeText(getContext(), "식단을 입력해주쇼~!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "식단을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     autoCompleteInsertText.clearFocus();
                 } else {
-                    Items.add(str_item);
-                    adapter.notifyDataSetChanged();
-                    autoCompleteInsertText.setText("");
-                    autoCompleteInsertText.clearFocus();
-                    Toast.makeText(getApplicationContext(), "'" + str_item + "'" + " 메뉴가 추가됨!.", Toast.LENGTH_SHORT).show();
+                    if (selectedFood.getName().equals(str_item)){
+                        // calendar fragment에서 선택한 날짜 정보 받아오기 (intent 이용)
+                        Date date;
+                        Record record = new Record();
+                        // mukDBHelper.insertRecord(record);
+                        // selectedFood의 id값을 넘겨서 record 테이블에 저장하고, 다시 adapter에 그 Item 값 업데이트 해야함
+                        adapter.notifyDataSetChanged();
+                        autoCompleteInsertText.setText("");
+                        autoCompleteInsertText.clearFocus();
+                        Toast.makeText(getApplicationContext(), "'" + str_item + "'" + " 메뉴가 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

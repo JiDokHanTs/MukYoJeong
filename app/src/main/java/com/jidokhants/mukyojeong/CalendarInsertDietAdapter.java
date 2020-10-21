@@ -12,11 +12,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jidokhants.mukyojeong.model.Food;
+import com.jidokhants.mukyojeong.model.Record;
+
 import java.util.ArrayList;
 
 public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInsertDietAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = null;
+    private ArrayList<Record> mData = null;
     Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +39,7 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
     }
 
     CalendarInsertDietAdapter() {};
-    CalendarInsertDietAdapter(ArrayList<String> list) {
+    CalendarInsertDietAdapter(ArrayList<Record> list) {
         mData = list;
     }
 
@@ -53,8 +56,9 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
 
     @Override
     public void onBindViewHolder(final CalendarInsertDietAdapter.ViewHolder holder, final int position) {
-        String text = mData.get(position);
-        holder.textView.setText(text);
+        Record record = mData.get(position);
+        holder.textView.setText(record.getFood().getName().toString());
+        holder.editCount.setText(record.getAmountRatio()+"");
 
         holder.minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +94,7 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
         return mData.size();
     }
 
-    public void addItem(String data) {
+    public void addItem(Record data) {
         mData.add(data);
         notifyDataSetChanged();
     }
