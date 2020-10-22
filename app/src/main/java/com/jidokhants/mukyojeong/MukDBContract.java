@@ -63,5 +63,5 @@ public class MukDBContract {
 
     public static final String SQL_RECORD_DELETE = "DELETE FROM "+ TABLE_RECORDS +" WHERE "+RECORD_COL_ID +" = ";
     public static final String SQL_RECORD_UPDATE = "UPDATE "+ TABLE_RECORDS +" SET "+ RECORD_COL_AMOUNT_RATIO+" = ";
-    public static final String SQL_RECORD_UPDATE_WHERE = "WHERE "+RECORD_COL_ID +" = ";
+    public static final String SQL_RECORD_UPDATE_WHERE = " WHERE "+RECORD_COL_ID +" = ";
 }
