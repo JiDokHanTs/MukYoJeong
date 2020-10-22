@@ -245,6 +245,48 @@ public class MukDBHelper extends SQLiteOpenHelper {
         }
         return records;
     }
+    public Food weekRecord(String date){
+
+        String before = (Integer.parseInt(date)-6)+"";
+        String selection = "'"+before+"' AND '"+date+"' GROUP BY rcd_date)";
+        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_WEEK_SELECT+selection,null);
+
+        cursor.moveToNext();
+        int fid = cursor.getInt(0);
+        double calorie = cursor.getDouble(1);
+        double moisture = cursor.getDouble(2);
+        double protein = cursor.getDouble(3);
+        double fat = cursor.getDouble(4);
+        double carbohydrate = cursor.getDouble(5);
+        double sugars = cursor.getDouble(6);
+        double fiber = cursor.getDouble(7);
+        double calcium = cursor.getDouble(8);
+        double fe = cursor.getDouble(9);
+        double magnesium = cursor.getDouble(10);
+        double phosphorus = cursor.getDouble(11);
+        double potassium = cursor.getDouble(12);
+        double salt = cursor.getDouble(13);
+        double zinc = cursor.getDouble(14);
+        double copper = cursor.getDouble(15);
+        double manganese = cursor.getDouble(16);
+        double selenium = cursor.getDouble(17);
+        double iodine = cursor.getDouble(18);
+        double chlorine = cursor.getDouble(19);
+        double vitaminA = cursor.getDouble(20);
+        double vitaminARE = cursor.getDouble(21);
+        double retinol = cursor.getDouble(22);
+        double betaCarotene = cursor.getDouble(23);
+        double vitaminB = cursor.getDouble(24);
+        double vitaminD = cursor.getDouble(25);
+        double panto = cursor.getDouble(26);
+        double vitaminB6 = cursor.getDouble(27);
+        double biotin = cursor.getDouble(28);
+        double vitaminC = cursor.getDouble(29);
+        double omega3FattyAcids = cursor.getDouble(30);
+        double omega6FattyAcids = cursor.getDouble(31);
+        Food food = new Food(fid,  calorie,  moisture,  protein,  fat,  carbohydrate,  sugars,  fiber,  calcium,  fe,  magnesium,  phosphorus,  potassium,  salt,  zinc,  copper,  manganese,  selenium,  iodine,  chlorine,  vitaminA,  vitaminARE,  retinol,  betaCarotene,  vitaminB,  vitaminD,  panto,  vitaminB6,  biotin,  vitaminC,  omega3FattyAcids,  omega6FattyAcids);
+        return food;
+    }
     public long insertRecord(Record record){
         ContentValues values = new ContentValues();
         values.put(MukDBContract.RECORD_COL_DATE, record.getDate());

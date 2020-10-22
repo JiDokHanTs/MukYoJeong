@@ -106,30 +106,30 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
             }
         });
 
-        holder.editCount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(holder.editCount.getText().length()>0) {
-                    Record record = mData.get(position);
-                    Double cnt = record.getAmountRatio();
-                    record.setAmountRatio(cnt);
-                    holder.editCount.setText(cnt+"");
-                    //notifyDataSetChanged();
-                    mukDBHelper.updateRecord(record);
-                    Log.d("ratio key", "record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
-                }
-            }
-        });
+//        holder.editCount.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if(holder.editCount.getText().length()>0) {
+//                    Record record = mData.get(position);
+//                    Double cnt = record.getAmountRatio();
+//                    record.setAmountRatio(cnt);
+//                    holder.editCount.setText(cnt+"");
+//                    //notifyDataSetChanged();
+//                    mukDBHelper.updateRecord(record);
+//                    Log.d("ratio key", "record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
+//                }
+//            }
+//        });
     }
 
 

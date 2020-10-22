@@ -47,6 +47,41 @@ public class Food {
         this.id = id;
     }
 
+    public Food(int id, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminB, double vitaminD, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
+        this.id = id;
+        this.calorie = calorie;
+        this.moisture = moisture;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrate = carbohydrate;
+        this.sugars = sugars;
+        this.fiber = fiber;
+        this.calcium = calcium;
+        this.fe = fe;
+        this.magnesium = magnesium;
+        this.phosphorus = phosphorus;
+        this.potassium = potassium;
+        this.salt = salt;
+        this.zinc = zinc;
+        this.copper = copper;
+        this.manganese = manganese;
+        this.selenium = selenium;
+        this.iodine = iodine;
+        this.chlorine = chlorine;
+        this.vitaminA = vitaminA;
+        this.vitaminARE = vitaminARE;
+        this.retinol = retinol;
+        this.betaCarotene = betaCarotene;
+        this.vitaminB = vitaminB;
+        this.vitaminD = vitaminD;
+        this.panto = panto;
+        this.vitaminB6 = vitaminB6;
+        this.biotin = biotin;
+        this.vitaminC = vitaminC;
+        this.omega3FattyAcids = omega3FattyAcids;
+        this.omega6FattyAcids = omega6FattyAcids;
+    }
+
     public Food(int id, String dBGroup, String commercial, String name, String from, String subCategory, double servingSize, String unit, double totalGram, double totalML, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminB, double vitaminD, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
         this.id = id;
         this.dBGroup = dBGroup;
