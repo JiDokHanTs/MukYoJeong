@@ -1,7 +1,6 @@
 package com.jidokhants.mukyojeong;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,13 @@ import com.jidokhants.mukyojeong.model.Food;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.github.mikephil.charting.charts.RadarChart;
+
 public class FragmentCalendarChart extends Fragment {
     public static final String TAG = "CAL_CHART";
     private MukDBHelper mukDBHelper;
+
+    RadarChart radarChart;
 
     public static FragmentCalendarChart newInstance() {
         FragmentCalendarChart fragment = new FragmentCalendarChart();
@@ -40,6 +43,10 @@ public class FragmentCalendarChart extends Fragment {
         Log.d(TAG, "단백질: "+ weekResult.getProtein()+"g");
         Log.d(TAG, "지방: "+ weekResult.getFat()+"g");
         Log.d(TAG, "수분: "+ weekResult.getMoisture()+"g");
+        radarChart = view.findViewById(R.id.radarChart);
+
+
+
         return view;
     }
 }
