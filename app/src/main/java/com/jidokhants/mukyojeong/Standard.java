@@ -29,7 +29,7 @@ public class Standard { //1일 섭취량 기준
     public static final double vitaminB6 = 1.4; //mg
     public static final double biotin = 30; // mmg
     public static final double vitaminC = 100; //mg
-    //public static final double omega3FattyAcidsl;
+    //public static final double omega3FattyAcids;
     //public static final double omega6FattyAcids;
 
 }
