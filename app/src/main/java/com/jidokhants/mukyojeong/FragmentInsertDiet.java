@@ -36,6 +36,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class FragmentInsertDiet extends Fragment implements View.OnClickListener {
     Button[] toggleButtons = new Button[6];
     int toggleButtonClickedId;
+    TextView tv_meal;
 
     private MukDBHelper mukDBHelper;
     ArrayList<FoodItem> foodList;
@@ -59,7 +60,7 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
         Items = new ArrayList<>();
 
-        TextView tv_meal = view.findViewById(R.id.text_meal_diet);
+        tv_meal = view.findViewById(R.id.text_meal_diet);
 
         final AutoCompleteTextView autoCompleteInsertText = view.findViewById(R.id.auto_complete_insert_diet);
         Button btn_add = view.findViewById(R.id.btn_add_diet);
@@ -107,8 +108,9 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
                         record.setAmountRatio(1.0);
                         long rcdId = mukDBHelper.insertRecord(record);
                         Record newRecord = mukDBHelper.getRecordOne(rcdId);
-                        Items.add(newRecord);
-                        insertDietAdapter.notifyDataSetChanged();
+                        insertDietAdapter.addItem(newRecord);
+                        //Items.add(newRecord);
+                        //insertDietAdapter.notifyDataSetChanged();
                         autoCompleteInsertText.setText("");
                         autoCompleteInsertText.clearFocus();
                         Toast.makeText(getApplicationContext(), "'" + str_item + "'" + " 메뉴가 추가되었습니다.", Toast.LENGTH_SHORT).show();
@@ -142,21 +144,27 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.toggleButton1:
                 selectedMeal = 1;
+                tv_meal.setText("오늘의 아침");
                 break;
             case R.id.toggleButton2:
                 selectedMeal = 2;
+                tv_meal.setText("오늘의 점심");
                 break;
             case R.id.toggleButton3:
                 selectedMeal = 3;
+                tv_meal.setText("오늘의 저녁");
                 break;
             case R.id.toggleButton4:
                 selectedMeal = 4;
+                tv_meal.setText("오늘의 간식");
                 break;
             case R.id.toggleButton5:
                 selectedMeal = 5;
+                tv_meal.setText("오늘의 물????");
                 break;
             case R.id.toggleButton6:
                 selectedMeal = 6;
+                tv_meal.setText("오늘의 주류");
 
                 break;
         }

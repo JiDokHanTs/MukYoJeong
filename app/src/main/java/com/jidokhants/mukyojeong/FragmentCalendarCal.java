@@ -29,8 +29,7 @@ public class FragmentCalendarCal extends Fragment {
     TextView selectedDateTextView;
     static String selectedDate, selectedDateParsed;
 
-    ArrayList<Record> breakfastList;
-    ArrayList<Record> lunchList;
+    ArrayList<Record> breakfastList, lunchList, dinnerList, snackList;
 
     MukDBHelper mukDBHelper;
 
@@ -57,6 +56,8 @@ public class FragmentCalendarCal extends Fragment {
 
         breakfastList = mukDBHelper.getRecord(selectedDateParsed, 1);
         lunchList = mukDBHelper.getRecord(selectedDateParsed, 2);
+        dinnerList = mukDBHelper.getRecord(selectedDateParsed,3);
+        snackList = mukDBHelper.getRecord(selectedDateParsed, 4);
         Log.d("record selecting", "selectedDate: " + selectedDateParsed);
 //        Log.d("breakFast", "size: "+breakfastList.size());
 //        for (int i = 0; i < breakfastList.size(); i++) {
@@ -70,12 +71,18 @@ public class FragmentCalendarCal extends Fragment {
 
         rv_breakfast.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_lunch.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_dinner.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_snack.setLayoutManager(new LinearLayoutManager(getContext()));
 
         final CalendarTextAdapter adapter1 = new CalendarTextAdapter(breakfastList);
         final CalendarTextAdapter adapter2 = new CalendarTextAdapter(lunchList);
+        final CalendarTextAdapter adapter3 = new CalendarTextAdapter(dinnerList);
+        final CalendarTextAdapter adapter4 = new CalendarTextAdapter(snackList);
 
         rv_breakfast.setAdapter(adapter1);
         rv_lunch.setAdapter(adapter2);
+        rv_dinner.setAdapter(adapter3);
+        rv_snack.setAdapter(adapter4);
 
         ImageButton btn_add = view.findViewById(R.id.btn_add_cal);
 
@@ -94,8 +101,12 @@ public class FragmentCalendarCal extends Fragment {
 
                 breakfastList = mukDBHelper.getRecord(selectedDateParsed, 1);
                 lunchList = mukDBHelper.getRecord(selectedDateParsed, 2);
+                dinnerList = mukDBHelper.getRecord(selectedDateParsed,3);
+                snackList = mukDBHelper.getRecord(selectedDateParsed, 4);
                 adapter1.updateItemList(breakfastList);
                 adapter2.updateItemList(lunchList);
+                adapter3.updateItemList(dinnerList);
+                adapter4.updateItemList(snackList);
             }
 
             @Override

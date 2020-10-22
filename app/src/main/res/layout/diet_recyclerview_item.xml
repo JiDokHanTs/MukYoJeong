@@ -27,7 +27,7 @@
         android:layout_marginRight="100dp"
         android:paddingRight="20dp"
         android:text="여기 먹은 메뉴요!"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />

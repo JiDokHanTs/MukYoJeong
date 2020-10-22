@@ -254,4 +254,11 @@ public class MukDBHelper extends SQLiteOpenHelper {
         return db.insert(MukDBContract.TABLE_RECORDS,null, values);
 
     }
+    public void deleteRocord(Record record) {
+        db.execSQL(MukDBContract.SQL_RECORD_DELETE+record.getId());
+    }
+
+    public void updateRecord(Record record) {
+        db.execSQL(MukDBContract.SQL_RECORD_UPDATE+record.getAmountRatio()+MukDBContract.SQL_RECORD_UPDATE_WHERE+record.getId());
+    }
 }
