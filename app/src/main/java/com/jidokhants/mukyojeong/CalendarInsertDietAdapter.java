@@ -1,6 +1,9 @@
 package com.jidokhants.mukyojeong;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
 
     private ArrayList<Record> mData = null;
     Context context;
+
+    private MukDBHelper mukDBHelper;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView, minus, plus;
@@ -56,9 +61,11 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
 
     @Override
     public void onBindViewHolder(final CalendarInsertDietAdapter.ViewHolder holder, final int position) {
-        Record record = mData.get(position);
-        holder.textView.setText(record.getFood().getName().toString());
-        holder.editCount.setText(record.getAmountRatio()+"");
+        mukDBHelper = MukDBHelper.getInstance(context);
+
+        Record curRecord = mData.get(position);
+        holder.textView.setText(curRecord.getFood().getName().toString());
+        holder.editCount.setText(curRecord.getAmountRatio()+"");
 
         holder.minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +73,13 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
                 if ((Double.parseDouble(holder.editCount.getText().toString())) == 0.0){
                     Toast.makeText(context, "0 이하로 입력할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }else{
-                    Double cnt = (Double.parseDouble(holder.editCount.getText().toString()) -1);
-                    holder.editCount.setText(cnt+"");
+                    Record record =mData.get(position);
+                    Double cnt = record.getAmountRatio() -1 ;
+                    //holder.editCount.setText(cnt+"");
+                    record.setAmountRatio(cnt);
+                    notifyDataSetChanged();
+//                    //mukDBHelper.updateRecord(record);
+                    Log.d("숫자 minus", "position : " + position + " record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
                 }
             }
         });
@@ -75,15 +87,47 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Double cnt = (Double.parseDouble(holder.editCount.getText().toString()) +1);
-                holder.editCount.setText(cnt+"");
+                Record record =mData.get(position);
+                Double cnt = record.getAmountRatio() + 1;
+                record.setAmountRatio(cnt);
+                notifyDataSetChanged();
+                //holder.editCount.setText(cnt+"");
+                //mukDBHelper.updateRecord(record);
+                Log.d("숫자 plus", "position : " + position + " record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
             }
         });
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context,"'"+ mData.get(position).getFood().getName() + "'" +"이(가) 삭제되었습니다.",Toast.LENGTH_SHORT).show();
+                mukDBHelper.deleteRocord(mData.get(position));
                 removeItem(position);
+            }
+        });
+
+        holder.editCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(holder.editCount.getText().length()>0) {
+                    Record record = mData.get(position);
+                    Double cnt = record.getAmountRatio();
+                    record.setAmountRatio(cnt);
+                    holder.editCount.setText(cnt+"");
+                    //notifyDataSetChanged();
+                    mukDBHelper.updateRecord(record);
+                    Log.d("ratio key", "record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
+                }
             }
         });
     }
