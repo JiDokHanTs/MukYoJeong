@@ -53,14 +53,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/calendar_breakfast_select_off"
-                android:layout_weight="2"/>
+                android:layout_weight="3"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cal_breakfast"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"/>
 
@@ -73,14 +73,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/calendar_lunch_select_off"
-                android:layout_weight="2"/>
+                android:layout_weight="3"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cal_lunch"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"/>
 
@@ -93,14 +93,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/calendar_dinner_select_off"
-                android:layout_weight="2"/>
+                android:layout_weight="3"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cal_dinner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"/>
 
@@ -113,14 +113,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/calendar_snack_select_off"
-                android:layout_weight="2"/>
+                android:layout_weight="3"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cal_snack"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"/>
 
