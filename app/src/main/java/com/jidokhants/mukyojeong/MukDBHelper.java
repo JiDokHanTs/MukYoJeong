@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.jidokhants.mukyojeong.model.Food;
 import com.jidokhants.mukyojeong.model.FoodItem;
@@ -125,6 +126,63 @@ public class MukDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    public Record getRecordOne(long recordId){
+        String selection = MukDBContract.RECORD_COL_ID+ " = "+ recordId;
+        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT+selection, null);
+        cursor.moveToNext();
+        int id = cursor.getInt(0);
+        String  tempDate = cursor.getString(1);
+        int tempMeal = cursor.getInt(2);
+        double tempRatio = cursor.getDouble(4);
+        int fid = cursor.getInt(5);
+        String dBGroup = cursor.getString(6);
+        String commercial = cursor.getString(7);
+        String name = cursor.getString(8);
+        String from = cursor.getString(9);
+        String subCategory = cursor.getString(10);
+        double servingSize = cursor.getDouble(11);
+        String unit = cursor.getString(12);
+        double totalGram = cursor.getDouble(13);
+        double totalML = cursor.getDouble(14);
+        double calorie = cursor.getDouble(15);
+        double moisture = cursor.getDouble(16);
+        double protein = cursor.getDouble(17);
+        double fat = cursor.getDouble(18);
+        double carbohydrate = cursor.getDouble(19);
+        double sugars = cursor.getDouble(20);
+        double fiber = cursor.getDouble(21);
+        double calcium = cursor.getDouble(22);
+        double fe = cursor.getDouble(23);
+        double magnesium = cursor.getDouble(24);
+        double phosphorus = cursor.getDouble(25);
+        double potassium = cursor.getDouble(26);
+        double salt = cursor.getDouble(27);
+        double zinc = cursor.getDouble(28);
+        double copper = cursor.getDouble(29);
+        double manganese = cursor.getDouble(30);
+        double selenium = cursor.getDouble(31);
+        double iodine = cursor.getDouble(32);
+        double chlorine = cursor.getDouble(33);
+        double vitaminA = cursor.getDouble(34);
+        double vitaminARE = cursor.getDouble(35);
+        double retinol = cursor.getDouble(36);
+        double betaCarotene = cursor.getDouble(37);
+        double vitaminB = cursor.getDouble(38);
+        double vitaminD = cursor.getDouble(39);
+        double panto = cursor.getDouble(40);
+        double vitaminB6 = cursor.getDouble(41);
+        double biotin = cursor.getDouble(42);
+        double vitaminC = cursor.getDouble(43);
+        double omega3FattyAcids = cursor.getDouble(44);
+        double omega6FattyAcids = cursor.getDouble(45);
+
+        Food food = new Food(fid, dBGroup, commercial, name, from, subCategory, servingSize, unit, totalGram, totalML,
+                calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
+                salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
+                vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+        return (new Record(id, tempDate, tempMeal, tempRatio, food));
+    }
     public ArrayList<Record> getRecord(String date, int meal){
 
         ArrayList<Record> records = new ArrayList<>();
@@ -134,12 +192,7 @@ public class MukDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT+selection,null);
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
-            Date tempDate = null;
-            try {
-                tempDate = (new SimpleDateFormat("yyyyMMdd")).parse(cursor.getString(1));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            String  tempDate = cursor.getString(1);
             int tempMeal = cursor.getInt(2);
             double tempRatio = cursor.getDouble(4);
             int fid = cursor.getInt(5);
@@ -188,11 +241,17 @@ public class MukDBHelper extends SQLiteOpenHelper {
                     calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
                     salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
                     vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
-            records.add(new Record(id, tempDate, tempMeal, tempRatio, food));
+            records.add(new Record(id, tempDate, tempMeal, tempRatio, food));;
         }
         return records;
     }
-    public void insertRecord(Record record){
-//        db.execSQL(MukDBContract.SQL_RECORD_INSERT + );
+    public long insertRecord(Record record){
+        ContentValues values = new ContentValues();
+        values.put(MukDBContract.RECORD_COL_DATE, record.getDate());
+        values.put(MukDBContract.RECORD_COL_MEAL, record.getMeal());
+        values.put(MukDBContract.RECORD_COL_FOOD_ID, record.getFood().getId());
+        values.put(MukDBContract.RECORD_COL_AMOUNT_RATIO, record.getAmountRatio());
+        return db.insert(MukDBContract.TABLE_RECORDS,null, values);
+
     }
 }

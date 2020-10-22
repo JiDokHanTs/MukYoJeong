@@ -40,10 +40,15 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
     private MukDBHelper mukDBHelper;
     ArrayList<FoodItem> foodList;
 
+    CalendarInsertDietAdapter insertDietAdapter;
     FoodItem selectedFood;
 
     ArrayList<Record> Items;
-    public static FragmentInsertDiet newInstance() {
+    static String selectedDate;
+    int selectedMeal = 1;
+
+    public static FragmentInsertDiet newInstance(String selected) {
+        selectedDate = selected.replaceAll("/", "");
         return new FragmentInsertDiet();
     }
 
@@ -71,16 +76,12 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
         mukDBHelper = MukDBHelper.getInstance(getContext());
 
-        Items= mukDBHelper.getRecord("20201015", 1);
-        final CalendarInsertDietAdapter adapter = new CalendarInsertDietAdapter(Items);
-        recyclerView.setAdapter(adapter);
+        Items = mukDBHelper.getRecord(selectedDate, selectedMeal);
+
+        insertDietAdapter = new CalendarInsertDietAdapter(Items);
+        recyclerView.setAdapter(insertDietAdapter);
 
         foodList = mukDBHelper.getSearchAllFood();
-
-
-        for (int i = 0; i <10; i++){
-            Log.d("foodList", (i+1)+" 번째: "+ foodList.get(i).getName());
-        }
 
         AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getActivity(), foodList);
         autoCompleteInsertText.setAdapter(autoCompleteTestAdapter);
@@ -98,13 +99,16 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
                     Toast.makeText(getContext(), "식단을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     autoCompleteInsertText.clearFocus();
                 } else {
-                    if (selectedFood.getName().equals(str_item)){
-                        // calendar fragment에서 선택한 날짜 정보 받아오기 (intent 이용)
-                        Date date;
+                    if (selectedFood.getName().equals(str_item)) {
                         Record record = new Record();
-                        // mukDBHelper.insertRecord(record);
-                        // selectedFood의 id값을 넘겨서 record 테이블에 저장하고, 다시 adapter에 그 Item 값 업데이트 해야함
-                        adapter.notifyDataSetChanged();
+                        record.setDate(selectedDate);
+                        record.setMeal(selectedMeal);
+                        record.setFood(new Food(selectedFood.getId()));
+                        record.setAmountRatio(1.0);
+                        long rcdId = mukDBHelper.insertRecord(record);
+                        Record newRecord = mukDBHelper.getRecordOne(rcdId);
+                        Items.add(newRecord);
+                        insertDietAdapter.notifyDataSetChanged();
                         autoCompleteInsertText.setText("");
                         autoCompleteInsertText.clearFocus();
                         Toast.makeText(getApplicationContext(), "'" + str_item + "'" + " 메뉴가 추가되었습니다.", Toast.LENGTH_SHORT).show();
@@ -124,18 +128,42 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                if (v.getId() != toggleButtonClickedId || v.isSelected()) {
-                    for (int i = 0; i < toggleButtons.length; i++) {
-                        if (toggleButtonClickedId == toggleButtons[i].getId()) {
-                            toggleButtons[i].setSelected(false);
-                            break;
-                        }
-                    }
+        if (v.getId() != toggleButtonClickedId || v.isSelected()) {
+            for (int i = 0; i < toggleButtons.length; i++) {
+                if (toggleButtonClickedId == toggleButtons[i].getId()) {
+                    toggleButtons[i].setSelected(false);
+                    break;
                 }
-                toggleButtonClickedId = v.getId();
-                v.setSelected(true);
+            }
         }
+        toggleButtonClickedId = v.getId();
+        v.setSelected(true);
+
+        switch (v.getId()) {
+            case R.id.toggleButton1:
+                selectedMeal = 1;
+                break;
+            case R.id.toggleButton2:
+                selectedMeal = 2;
+                break;
+            case R.id.toggleButton3:
+                selectedMeal = 3;
+                break;
+            case R.id.toggleButton4:
+                selectedMeal = 4;
+                break;
+            case R.id.toggleButton5:
+                selectedMeal = 5;
+                break;
+            case R.id.toggleButton6:
+                selectedMeal = 6;
+
+                break;
+        }
+        Items = mukDBHelper.getRecord(selectedDate, selectedMeal);
+
+        Log.d("MealChangeButton", "clicked, selectedMeal: "+selectedMeal+" selectedDate: "+selectedDate);
+        insertDietAdapter.updateItemList(Items);
+
     }
 }

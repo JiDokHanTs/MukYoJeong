@@ -49,15 +49,18 @@ public class MukDBContract {
 
     public static final String SQL_FOOD_SELECT = "SELECT * FROM "+ TABLE_FOODS+" ORDER BY "+ FOOD_COL_NAME;
     public static final String SQL_FOOD_SELECT_KEYWORDS = "SELECT " + FOOD_COL_ID+", " +FOOD_COL_COMM+", "+FOOD_COL_NAME+", "+FOOD_COL_FROM+" FROM " + TABLE_FOODS;
+
     public static final String TABLE_RECORDS = "records";
     public static final String RECORD_COL_ID = "rcd_id";
     public static final String RECORD_COL_DATE = "rcd_date";
     public static final String RECORD_COL_MEAL = "rcd_meal";
     public static final String RECORD_COL_FOOD_ID = "rcd_food_id";
     public static final String RECORD_COL_AMOUNT_RATIO = "rcd_amount_ratio";
+
     public static final String SQL_RECORD_SELECT = "SELECT * FROM " + TABLE_RECORDS +", "+ TABLE_FOODS+" WHERE "+FOOD_COL_ID+" = "+RECORD_COL_FOOD_ID+" AND ";
     public static final String SQL_RECORD_INSERT = "INSERT OR REPLACE INTO "+ TABLE_RECORDS +"("+ RECORD_COL_DATE+", "+RECORD_COL_MEAL+", "
         +RECORD_COL_FOOD_ID+", "+RECORD_COL_AMOUNT_RATIO+") VALUES ";
+
     public static final String SQL_RECORD_DELETE = "DELETE FROM "+ TABLE_RECORDS +" WHERE "+RECORD_COL_ID +" = ";
     public static final String SQL_RECORD_UPDATE = "UPDATE "+ TABLE_RECORDS +" SET "+ RECORD_COL_AMOUNT_RATIO+" = ";
     public static final String SQL_RECORD_UPDATE_WHERE = "WHERE "+RECORD_COL_ID +" = ";
