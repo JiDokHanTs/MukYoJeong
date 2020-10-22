@@ -74,11 +74,11 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
                     Toast.makeText(context, "0 이하로 입력할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }else{
                     Record record =mData.get(position);
-                    Double cnt = record.getAmountRatio() -1 ;
+                    Double cnt = record.getAmountRatio() - 0.5 ;
                     //holder.editCount.setText(cnt+"");
                     record.setAmountRatio(cnt);
                     notifyDataSetChanged();
-//                    //mukDBHelper.updateRecord(record);
+                    mukDBHelper.updateRecord(record);
                     Log.d("숫자 minus", "position : " + position + " record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
                 }
             }
@@ -88,11 +88,11 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
             @Override
             public void onClick(View view) {
                 Record record =mData.get(position);
-                Double cnt = record.getAmountRatio() + 1;
+                Double cnt = record.getAmountRatio() + 0.5;
                 record.setAmountRatio(cnt);
                 notifyDataSetChanged();
                 //holder.editCount.setText(cnt+"");
-                //mukDBHelper.updateRecord(record);
+                mukDBHelper.updateRecord(record);
                 Log.d("숫자 plus", "position : " + position + " record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
             }
         });
@@ -106,30 +106,30 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
             }
         });
 
-        holder.editCount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(holder.editCount.getText().length()>0) {
-                    Record record = mData.get(position);
-                    Double cnt = record.getAmountRatio();
-                    record.setAmountRatio(cnt);
-                    holder.editCount.setText(cnt+"");
-                    //notifyDataSetChanged();
-                    mukDBHelper.updateRecord(record);
-                    Log.d("ratio key", "record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
-                }
-            }
-        });
+//        holder.editCount.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if(holder.editCount.getText().length()>0) {
+//                    Record record = mData.get(position);
+//                    Double cnt = record.getAmountRatio();
+//                    record.setAmountRatio(cnt);
+//                    holder.editCount.setText(cnt+"");
+//                    //notifyDataSetChanged();
+//                    mukDBHelper.updateRecord(record);
+//                    Log.d("ratio key", "record name : " + record.getFood().getName() + " ratio : " + record.getAmountRatio());
+//                }
+//            }
+//        });
     }
 
 

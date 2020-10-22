@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.RadarChart;
+
 public class FragmentCalendarChart extends Fragment {
+
+    RadarChart radarChart;
 
     public static FragmentCalendarChart newInstance() {
         FragmentCalendarChart fragment = new FragmentCalendarChart();
@@ -21,6 +25,10 @@ public class FragmentCalendarChart extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar_chart, container, false);
+        radarChart = view.findViewById(R.id.radarChart);
+
+
+
         return view;
     }
 }
