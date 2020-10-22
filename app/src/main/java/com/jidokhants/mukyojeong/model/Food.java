@@ -43,6 +43,10 @@ public class Food {
     private double omega3FattyAcids;
     private double omega6FattyAcids;
 
+    public Food(int id) {
+        this.id = id;
+    }
+
     public Food(int id, String dBGroup, String commercial, String name, String from, String subCategory, double servingSize, String unit, double totalGram, double totalML, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminB, double vitaminD, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
         this.id = id;
         this.dBGroup = dBGroup;

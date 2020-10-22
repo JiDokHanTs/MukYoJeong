@@ -12,13 +12,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jidokhants.mukyojeong.model.Record;
+
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
 
 public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = null;
+    private ArrayList<Record> mData = null;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -27,10 +29,10 @@ public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapte
             super(itemView);
 
             textView = itemView.findViewById(R.id.tv_rv);
-           }
+        }
     }
 
-    CalendarTextAdapter(ArrayList<String> list) {
+    CalendarTextAdapter(ArrayList<Record> list) {
         mData = list;
     }
 
@@ -47,12 +49,15 @@ public class CalendarTextAdapter extends RecyclerView.Adapter<CalendarTextAdapte
 
     @Override
     public void onBindViewHolder(final CalendarTextAdapter.ViewHolder holder, final int position) {
-        String text = mData.get(position);
-        holder.textView.setText(text);
+        Record record = mData.get(position);
+        holder.textView.setText(record.getFood().getName() +"\t" +(record.getAmountRatio()*record.getFood().getCalorie())+"kcal");
 
 
     }
-
+    public void updateItemList(ArrayList<Record> records){
+        mData = records;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return mData.size();

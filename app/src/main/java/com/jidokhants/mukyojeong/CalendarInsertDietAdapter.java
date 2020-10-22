@@ -104,4 +104,8 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+    public void updateItemList (ArrayList<Record> records){
+        mData = records;
+        notifyDataSetChanged();
+    }
 }

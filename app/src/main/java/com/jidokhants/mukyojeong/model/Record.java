@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Record {
     private int id;
-    private Date date;
+    private String date;
     private int meal;
     private double amountRatio;
     private Food food;
@@ -13,7 +13,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(int id, Date date, int meal, double amountRatio, Food food) {
+    public Record(int id, String date, int meal, double amountRatio, Food food) {
         this.id = id;
         this.date = date;
         this.meal = meal;
@@ -29,11 +29,11 @@ public class Record {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -49,7 +49,7 @@ public class Record {
         return amountRatio;
     }
 
-    public void setAmountRatio(int amountRatio) {
+    public void setAmountRatio(double amountRatio) {
         this.amountRatio = amountRatio;
     }
 
