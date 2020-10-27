@@ -1,14 +1,21 @@
 package com.jidokhants.mukyojeong;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.components.XAxis;
@@ -30,11 +37,22 @@ public class FragmentCalendarChart extends Fragment {
     private MukDBHelper mukDBHelper;
 
     RadarChart radarChart;
+    LinearLayout menuLayout;
+    ConstraintLayout chartLayout;
+
+    TextView tvCal, tvCab, tvPro, tvFat, tvMo, tvVD, tvVC, tvFiber, tvFe, tvSalt;
+
+    ScrollView chartScrollView;
 
     public static FragmentCalendarChart newInstance() {
         FragmentCalendarChart fragment = new FragmentCalendarChart();
 
         return fragment;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Nullable
@@ -43,10 +61,38 @@ public class FragmentCalendarChart extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar_chart, container, false);
 
         mukDBHelper = MukDBHelper.getInstance(getContext());
+        TextView tvCal = view.findViewById(R.id.tv_cal);
+        TextView tvCab = view.findViewById(R.id.tv_carbo);
+        TextView tvPro = view.findViewById(R.id.tv_pro);
+        TextView tvFat = view.findViewById(R.id.tv_fat);
+        TextView tvMo = view.findViewById(R.id.tv_mo);
+        TextView tvVD = view.findViewById(R.id.tv_v_d);
+        TextView tvVC = view.findViewById(R.id.tv_v_c);
+        TextView tvFiber = view.findViewById(R.id.tv_fiber);
+        TextView tvFe = view.findViewById(R.id.tv_fe);
+        TextView tvSalt = view.findViewById(R.id.tv_salt);
+
+        chartScrollView = view.findViewById(R.id.chart_scrollview);
+        chartScrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        chartScrollView.fullScroll(View.FOCUS_DOWN);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        chartScrollView.fullScroll(View.FOCUS_UP);
+                        break;
+                }
+                return false;
+            }
+        });
 
         Date time = new Date();
         String today = (new SimpleDateFormat("yyyyMMdd")).format(time);
         Food weekResult = mukDBHelper.weekRecord(today);
+
         Log.d(TAG, "칼로리: " + weekResult.getCalorie() + "kcal");
         Log.d(TAG, "탄수회물: " + weekResult.getCarbohydrate() + "g");
         Log.d(TAG, "단백질: " + weekResult.getProtein() + "g");
@@ -55,11 +101,11 @@ public class FragmentCalendarChart extends Fragment {
         radarChart = view.findViewById(R.id.radarChart);
 
         ArrayList<RadarEntry> values = new ArrayList<>();
-        values.add(new RadarEntry((float)(weekResult.getCalorie()/Standard.calorie*100)));
-        values.add(new RadarEntry((float)(weekResult.getCarbohydrate()/Standard.carbohydrate*100)));
-        values.add(new RadarEntry((float)(weekResult.getProtein()/Standard.protein*100)));
-        values.add(new RadarEntry((float)(weekResult.getFat()/Standard.fat*100)));
-        values.add(new RadarEntry((float)(weekResult.getMoisture()/Standard.moisture*100)));
+        values.add(new RadarEntry((float) (weekResult.getCalorie() / Standard.calorie * 100)));
+        values.add(new RadarEntry((float) (weekResult.getCarbohydrate() / Standard.carbohydrate * 100)));
+        values.add(new RadarEntry((float) (weekResult.getProtein() / Standard.protein * 100)));
+        values.add(new RadarEntry((float) (weekResult.getFat() / Standard.fat * 100)));
+        values.add(new RadarEntry((float) (weekResult.getMoisture() / Standard.moisture * 100)));
 
         RadarDataSet dataSet = new RadarDataSet(values, null);
         dataSet.setDrawFilled(true);
@@ -74,7 +120,124 @@ public class FragmentCalendarChart extends Fragment {
         yAxis.setAxisMaximum(120f);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         radarChart.setData(radarData);
+        String state;
 
+        state = "";
+
+        Food analysisFood = new Food(1000000);
+
+        if (weekResult.getCalorie() / Standard.calorie < 0.7) {
+            tvCal.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getCalorie() / Standard.calorie > 1.2) {
+            tvCal.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setCalorie(Standard.calorie - weekResult.getCalorie());
+        tvCal.setText("칼로리: " + weekResult.getCalorie() + " (" + (int) (weekResult.getCalorie() / Standard.calorie * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getCarbohydrate() / Standard.carbohydrate < 0.7) {
+            tvCab.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getCarbohydrate() / Standard.carbohydrate > (double) 70 / 65.0) {
+            tvCab.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setCarbohydrate(Standard.carbohydrate - weekResult.getCarbohydrate());
+        tvCab.setText("탄수화물: " + weekResult.getCarbohydrate() + " (" + (int) (weekResult.getCarbohydrate() / Standard.carbohydrate * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getProtein() / Standard.protein < 7 / 15.0) {//ㅗㅗ
+            tvPro.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getProtein() / Standard.protein > 1.2) {
+            tvPro.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setProtein(Standard.protein - weekResult.getProtein());
+        tvPro.setText("단백질: " + weekResult.getProtein() + " (" + (int) (weekResult.getProtein() / Standard.protein * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getFat() / Standard.fat < 0.7) {
+            tvFat.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getFat() / Standard.fat > 1.2) {
+            tvFat.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setFat(Standard.fat - weekResult.getFat());
+
+        tvFat.setText("지방: " + weekResult.getFat() + " (" + (int) (weekResult.getFat() / Standard.fat * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getMoisture() / Standard.moisture < 0.7) {
+            tvMo.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getMoisture() / Standard.moisture > 1.2) {
+            tvMo.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setMoisture(Standard.moisture - weekResult.getMoisture());
+        tvMo.setText("수분: " + weekResult.getMoisture() + " (" + (int) (weekResult.getMoisture() / Standard.moisture * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getVitaminD() / Standard.vitaminD < 0.7) {
+            tvVD.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getVitaminD() / Standard.vitaminD > 1.2) {
+            tvVD.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setVitaminD(Standard.vitaminD - weekResult.getVitaminD());
+        tvVD.setText("비타민D: " + weekResult.getVitaminD() + " (" + (int) (weekResult.getVitaminD() / Standard.vitaminD) + "%) " + state);
+
+        state = "";
+        if (weekResult.getVitaminC() / Standard.vitaminC < 0.7) {
+            tvVC.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getVitaminC() / Standard.vitaminC > 1.2) {
+            tvVC.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setVitaminC(Standard.vitaminC - weekResult.getVitaminC());
+        tvVC.setText("비타민C: " + weekResult.getVitaminC() + " (" + (int) (weekResult.getVitaminC() / Standard.vitaminC * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getFiber() / Standard.fiber < 0.7) {
+            tvFiber.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getFiber() / Standard.fiber > 1.2) {
+            tvFiber.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setFiber(Standard.fiber - weekResult.getFiber());
+        tvFiber.setText("식이섬유: " + weekResult.getFiber() + " (" + (int) (weekResult.getFiber() / Standard.fiber * 100) + "%) " + state);
+
+        state = "";
+        if (weekResult.getFe() / Standard.fe < 0.7) {
+            tvFe.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getFe() / Standard.fe > 1.2) {
+            tvFe.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setFe(Standard.fe - weekResult.getFe());
+        tvFe.setText("철분: " + weekResult.getFe() + " (" + (int) (weekResult.getFe() / Standard.fe * 0.1) + "%) " + state);
+
+        state = "";
+        if (weekResult.getSalt() / Standard.salt < 0.7) {
+            tvSalt.setTextColor(Color.RED);
+            state = "under";
+        } else if (weekResult.getSalt() / Standard.salt > 1.2) {
+            tvSalt.setTextColor(Color.RED);
+            state = "over";
+        }
+        analysisFood.setSalt(Standard.salt - weekResult.getSalt());
+        tvSalt.setText("나트륨: " + weekResult.getSalt() + " (" + (int) (weekResult.getSalt() / Standard.salt * 0.1) + "%) " + state);
+
+        ArrayList<Food> bestMenu = mukDBHelper.getBestMenu(analysisFood);
         return view;
     }
+
 }

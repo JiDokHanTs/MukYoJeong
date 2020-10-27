@@ -1,149 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize">
 
-    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
-        android:id="@+id/collapsibleCalendar2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:padding="5dp"
-        app:buttonLeft_drawableTintColor="#4FC088"
-        app:buttonRight_drawableTintColor="#4FC088"
-        app:expandIconColor="#4FC088"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/round_border_white"
-        app:selectedItem_background="@drawable/circle_green_solid_background"
-        app:selectedItem_textColor="#ffffff"
-        app:textColor="@android:color/black"
-        app:todayItem_background="@drawable/circle_darkgreen_stroke_background"
-        app:todayItem_textColor="#4F7888"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:paddingTop="10dp"
-        android:paddingHorizontal="10dp"
-        android:background="@drawable/round_border_white"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collapsibleCalendar2">
-
-        <TextView
-            android:id="@+id/cal_today_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="2020/10/14"/>
+        <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+            android:id="@+id/collapsibleCalendar2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_border_white"
+            android:padding="5dp"
+            app:buttonLeft_drawableTintColor="#4FC088"
+            app:buttonRight_drawableTintColor="#4FC088"
+            app:expandIconColor="#4FC088"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:selectedItem_background="@drawable/circle_green_solid_background"
+            app:selectedItem_textColor="#ffffff"
+            app:textColor="@android:color/black"
+            app:todayItem_background="@drawable/circle_darkgreen_stroke_background"
+            app:todayItem_textColor="#4F7888" />
 
         <LinearLayout
-            android:id="@+id/cal_breakfast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_border_white"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/collapsibleCalendar2">
 
-            <ImageView
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/cal_today_date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_breakfast_select_off"
-                android:layout_weight="1"
-                />
+                android:layout_marginLeft="10dp"
+                android:text="2020/10/14" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cal_breakfast"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/cal_breakfast"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                />
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
 
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_breakfast_select_off" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cal_breakfast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cal_lunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_lunch_select_off" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cal_lunch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cal_dinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_dinner_select_off" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cal_dinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cal_snack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_snack_select_off" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cal_snack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_add_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:src="@drawable/add_btn" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/cal_lunch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_lunch_select_off"
-                android:layout_weight="1"
-               />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cal_lunch"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-               />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/cal_dinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_dinner_select_off"
-                android:layout_weight="1"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cal_dinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/cal_snack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/calendar_snack_select_off"
-                android:layout_weight="1"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cal_snack"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"/>
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btn_add_cal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/add_btn"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
