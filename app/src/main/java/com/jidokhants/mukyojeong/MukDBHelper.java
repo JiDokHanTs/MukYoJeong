@@ -46,11 +46,12 @@ public class MukDBHelper extends SQLiteOpenHelper {
         super.onConfigure(db);
         db.disableWriteAheadLogging();
     }
-    public ArrayList<FoodItem> getSearchAllFood(){
+
+    public ArrayList<FoodItem> getSearchAllFood() {
         ArrayList<FoodItem> foodItems = new ArrayList<>();
         Cursor cursor;
         cursor = db.rawQuery(MukDBContract.SQL_FOOD_SELECT_KEYWORDS, null);
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String commercial = cursor.getString(1);
             String name = cursor.getString(2);
@@ -60,6 +61,7 @@ public class MukDBHelper extends SQLiteOpenHelper {
         }
         return foodItems;
     }
+
     public ArrayList<Food> getAllFood() {
         ArrayList<Food> foodList = new ArrayList<Food>();
         Cursor cursor;
@@ -117,6 +119,14 @@ public class MukDBHelper extends SQLiteOpenHelper {
         return foodList;
     }
 
+    public ArrayList<Food> getBestMenu(Food af){
+        ArrayList<Food> result = new ArrayList<>();
+        String selection;
+        if (af.getId()!=1000000)
+            return null;
+        return result;
+
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -127,12 +137,12 @@ public class MukDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Record getRecordOne(long recordId){
-        String selection = MukDBContract.RECORD_COL_ID+ " = "+ recordId;
-        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT+selection, null);
+    public Record getRecordOne(long recordId) {
+        String selection = MukDBContract.RECORD_COL_ID + " = " + recordId;
+        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT + selection, null);
         cursor.moveToNext();
         int id = cursor.getInt(0);
-        String  tempDate = cursor.getString(1);
+        String tempDate = cursor.getString(1);
         int tempMeal = cursor.getInt(2);
         double tempRatio = cursor.getDouble(4);
         int fid = cursor.getInt(5);
@@ -183,16 +193,17 @@ public class MukDBHelper extends SQLiteOpenHelper {
                 vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
         return (new Record(id, tempDate, tempMeal, tempRatio, food));
     }
-    public ArrayList<Record> getRecord(String date, int meal){
+
+    public ArrayList<Record> getRecord(String date, int meal) {
 
         ArrayList<Record> records = new ArrayList<>();
 
-        String selection = MukDBContract.RECORD_COL_DATE+ " = '"+date+"' AND "+ MukDBContract.RECORD_COL_MEAL + " = "+meal;
+        String selection = MukDBContract.RECORD_COL_DATE + " = '" + date + "' AND " + MukDBContract.RECORD_COL_MEAL + " = " + meal;
 
-        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT+selection,null);
-        while(cursor.moveToNext()){
+        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_SELECT + selection, null);
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
-            String  tempDate = cursor.getString(1);
+            String tempDate = cursor.getString(1);
             int tempMeal = cursor.getInt(2);
             double tempRatio = cursor.getDouble(4);
             int fid = cursor.getInt(5);
@@ -241,66 +252,70 @@ public class MukDBHelper extends SQLiteOpenHelper {
                     calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
                     salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
                     vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
-            records.add(new Record(id, tempDate, tempMeal, tempRatio, food));;
+            records.add(new Record(id, tempDate, tempMeal, tempRatio, food));
+            ;
         }
         return records;
     }
-    public Food weekRecord(String date){
 
-        String before = (Integer.parseInt(date)-6)+"";
-        String selection = "'"+before+"' AND '"+date+"' GROUP BY rcd_date)";
-        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_WEEK_SELECT+selection,null);
+    public Food weekRecord(String date) {
+
+        String before = (Integer.parseInt(date) - 6) + "";
+        String selection = "'" + before + "' AND '" + date + "' GROUP BY rcd_date)";
+        Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_WEEK_SELECT + selection, null);
 
         cursor.moveToNext();
         int fid = cursor.getInt(0);
-        double calorie = cursor.getDouble(1);
-        double moisture = cursor.getDouble(2);
-        double protein = cursor.getDouble(3);
-        double fat = cursor.getDouble(4);
-        double carbohydrate = cursor.getDouble(5);
-        double sugars = cursor.getDouble(6);
-        double fiber = cursor.getDouble(7);
-        double calcium = cursor.getDouble(8);
-        double fe = cursor.getDouble(9);
-        double magnesium = cursor.getDouble(10);
-        double phosphorus = cursor.getDouble(11);
-        double potassium = cursor.getDouble(12);
-        double salt = cursor.getDouble(13);
-        double zinc = cursor.getDouble(14);
-        double copper = cursor.getDouble(15);
-        double manganese = cursor.getDouble(16);
-        double selenium = cursor.getDouble(17);
-        double iodine = cursor.getDouble(18);
-        double chlorine = cursor.getDouble(19);
-        double vitaminA = cursor.getDouble(20);
-        double vitaminARE = cursor.getDouble(21);
-        double retinol = cursor.getDouble(22);
-        double betaCarotene = cursor.getDouble(23);
-        double vitaminB = cursor.getDouble(24);
-        double vitaminD = cursor.getDouble(25);
-        double panto = cursor.getDouble(26);
-        double vitaminB6 = cursor.getDouble(27);
-        double biotin = cursor.getDouble(28);
-        double vitaminC = cursor.getDouble(29);
-        double omega3FattyAcids = cursor.getDouble(30);
-        double omega6FattyAcids = cursor.getDouble(31);
-        Food food = new Food(fid,  calorie,  moisture,  protein,  fat,  carbohydrate,  sugars,  fiber,  calcium,  fe,  magnesium,  phosphorus,  potassium,  salt,  zinc,  copper,  manganese,  selenium,  iodine,  chlorine,  vitaminA,  vitaminARE,  retinol,  betaCarotene,  vitaminB,  vitaminD,  panto,  vitaminB6,  biotin,  vitaminC,  omega3FattyAcids,  omega6FattyAcids);
+        double calorie = cursor.getDouble(1) / fid;
+        double moisture = cursor.getDouble(2) / fid;
+        double protein = cursor.getDouble(3) / fid;
+        double fat = cursor.getDouble(4) / fid;
+        double carbohydrate = cursor.getDouble(5) / fid;
+        double sugars = cursor.getDouble(6) / fid;
+        double fiber = cursor.getDouble(7) / fid;
+        double calcium = cursor.getDouble(8) / fid;
+        double fe = cursor.getDouble(9) / fid;
+        double magnesium = cursor.getDouble(10) / fid;
+        double phosphorus = cursor.getDouble(11) / fid;
+        double potassium = cursor.getDouble(12) / fid;
+        double salt = cursor.getDouble(13) / fid;
+        double zinc = cursor.getDouble(14) / fid;
+        double copper = cursor.getDouble(15) / fid;
+        double manganese = cursor.getDouble(16) / fid;
+        double selenium = cursor.getDouble(17) / fid;
+        double iodine = cursor.getDouble(18) / fid;
+        double chlorine = cursor.getDouble(19) / fid;
+        double vitaminA = cursor.getDouble(20) / fid;
+        double vitaminARE = cursor.getDouble(21) / fid;
+        double retinol = cursor.getDouble(22) / fid;
+        double betaCarotene = cursor.getDouble(23) / fid;
+        double vitaminB = cursor.getDouble(24) / fid;
+        double vitaminD = cursor.getDouble(25) / fid;
+        double panto = cursor.getDouble(26) / fid;
+        double vitaminB6 = cursor.getDouble(27) / fid;
+        double biotin = cursor.getDouble(28) / fid;
+        double vitaminC = cursor.getDouble(29) / fid;
+        double omega3FattyAcids = cursor.getDouble(30) / fid;
+        double omega6FattyAcids = cursor.getDouble(31) / fid;
+        Food food = new Food(fid, calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium, salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB, vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
         return food;
     }
-    public long insertRecord(Record record){
+
+    public long insertRecord(Record record) {
         ContentValues values = new ContentValues();
         values.put(MukDBContract.RECORD_COL_DATE, record.getDate());
         values.put(MukDBContract.RECORD_COL_MEAL, record.getMeal());
         values.put(MukDBContract.RECORD_COL_FOOD_ID, record.getFood().getId());
         values.put(MukDBContract.RECORD_COL_AMOUNT_RATIO, record.getAmountRatio());
-        return db.insert(MukDBContract.TABLE_RECORDS,null, values);
+        return db.insert(MukDBContract.TABLE_RECORDS, null, values);
 
     }
+
     public void deleteRocord(Record record) {
-        db.execSQL(MukDBContract.SQL_RECORD_DELETE+record.getId());
+        db.execSQL(MukDBContract.SQL_RECORD_DELETE + record.getId());
     }
 
     public void updateRecord(Record record) {
-        db.execSQL(MukDBContract.SQL_RECORD_UPDATE+record.getAmountRatio()+MukDBContract.SQL_RECORD_UPDATE_WHERE+record.getId());
+        db.execSQL(MukDBContract.SQL_RECORD_UPDATE + record.getAmountRatio() + MukDBContract.SQL_RECORD_UPDATE_WHERE + record.getId());
     }
 }

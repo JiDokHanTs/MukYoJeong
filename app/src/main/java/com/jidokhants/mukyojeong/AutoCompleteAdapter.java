@@ -41,18 +41,17 @@ public class AutoCompleteAdapter extends ArrayAdapter<FoodItem> {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.cal_autocomplete_item, parent, false
             );
-
-            TextView foodName = convertView.findViewById(R.id.auto_food_name);
-            TextView foodFrom = convertView.findViewById(R.id.auto_food_from);
-
-            FoodItem foodItem = getItem(position);
-
-            foodName.setText(foodItem.getName());
-            if (!foodItem.getCommercial().equals("품목대표"))
-                foodFrom.setText(foodItem.getFrom());
-            else
-                foodFrom.setText("");
         }
+        TextView foodName = convertView.findViewById(R.id.auto_food_name);
+        TextView foodFrom = convertView.findViewById(R.id.auto_food_from);
+
+        FoodItem foodItem = getItem(position);
+
+        foodName.setText(foodItem.getName());
+        if (!foodItem.getCommercial().equals("품목대표"))
+            foodFrom.setText(foodItem.getFrom());
+        else
+            foodFrom.setText("");
         return convertView;
     }
 

@@ -64,7 +64,7 @@ public class CalendarInsertDietAdapter extends RecyclerView.Adapter<CalendarInse
         mukDBHelper = MukDBHelper.getInstance(context);
 
         Record curRecord = mData.get(position);
-        holder.textView.setText(curRecord.getFood().getName().toString());
+        holder.textView.setText(curRecord.getFood().getName().toString()+" ("+curRecord.getFood().getServingSize()+ curRecord.getFood().getUnit()+")");
         holder.editCount.setText(curRecord.getAmountRatio()+"");
 
         holder.minus.setOnClickListener(new View.OnClickListener() {
