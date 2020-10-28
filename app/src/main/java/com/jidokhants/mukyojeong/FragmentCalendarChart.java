@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class FragmentCalendarChart extends Fragment {
     private MukDBHelper mukDBHelper;
 
     RadarChart radarChart;
+    TextView textView;
 
     public static FragmentCalendarChart newInstance() {
         FragmentCalendarChart fragment = new FragmentCalendarChart();
