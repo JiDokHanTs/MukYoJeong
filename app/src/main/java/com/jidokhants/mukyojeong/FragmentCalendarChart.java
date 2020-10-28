@@ -1,14 +1,15 @@
 package com.jidokhants.mukyojeong;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,7 +29,9 @@ import com.jidokhants.mukyojeong.model.Food;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import com.github.mikephil.charting.charts.RadarChart;
 
@@ -36,13 +39,51 @@ public class FragmentCalendarChart extends Fragment {
     public static final String TAG = "CAL_CHART";
     private MukDBHelper mukDBHelper;
 
+    Calendar myCalendar = Calendar.getInstance();
+
     RadarChart radarChart;
     LinearLayout menuLayout;
     ConstraintLayout chartLayout;
 
     TextView tvCal, tvCab, tvPro, tvFat, tvMo, tvVD, tvVC, tvFiber, tvFe, tvSalt;
+    EditText edit_from, edit_to;
+    String date_from, date_to;
 
     ScrollView chartScrollView;
+
+    DatePickerDialog.OnDateSetListener myDatePicker1 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONDAY, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel1();
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener myDatePicker2 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONDAY, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel2();
+        }
+    };
+
+    private void updateLabel1() {
+        String myFormat = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+        edit_from.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void updateLabel2() {
+        String myFormat = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+        edit_to.setText(sdf.format(myCalendar.getTime()));
+    }
 
     public static FragmentCalendarChart newInstance() {
         FragmentCalendarChart fragment = new FragmentCalendarChart();
@@ -60,6 +101,9 @@ public class FragmentCalendarChart extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar_chart, container, false);
 
+        edit_from = view.findViewById(R.id.edit_from);
+        edit_to = view.findViewById(R.id.edit_to);
+
         mukDBHelper = MukDBHelper.getInstance(getContext());
         TextView tvCal = view.findViewById(R.id.tv_cal);
         TextView tvCab = view.findViewById(R.id.tv_carbo);
@@ -71,6 +115,22 @@ public class FragmentCalendarChart extends Fragment {
         TextView tvFiber = view.findViewById(R.id.tv_fiber);
         TextView tvFe = view.findViewById(R.id.tv_fe);
         TextView tvSalt = view.findViewById(R.id.tv_salt);
+
+        edit_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), myDatePicker1,
+                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        edit_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), myDatePicker2,
+                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         chartScrollView = view.findViewById(R.id.chart_scrollview);
         chartScrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -88,6 +148,9 @@ public class FragmentCalendarChart extends Fragment {
                 return false;
             }
         });
+
+        date_from = edit_from.getText().toString();
+        date_to = edit_to.getText().toString();
 
         Date time = new Date();
         String today = (new SimpleDateFormat("yyyyMMdd")).format(time);
