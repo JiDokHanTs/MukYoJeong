@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.jidokhants.mukyojeong.model.Food;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,8 @@ public class FragmentCalendarChart extends Fragment {
 
     TextView tvCal, tvCab, tvPro, tvFat, tvMo, tvVD, tvVC, tvFiber, tvFe, tvSalt;
     EditText edit_from, edit_to;
-    String date_from, date_to;
+    String raw_date_from, raw_date_to, date_from, date_to;
+    SimpleDateFormat sdf_string = new SimpleDateFormat("yyyyMMdd");
 
     ScrollView chartScrollView;
 
@@ -73,14 +75,14 @@ public class FragmentCalendarChart extends Fragment {
     };
 
     private void updateLabel1() {
-        String myFormat = "yyyyMMdd";
+        String myFormat = "yyyy.MM.dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         edit_from.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void updateLabel2() {
-        String myFormat = "yyyyMMdd";
+        String myFormat = "yyyy.MM.dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         edit_to.setText(sdf.format(myCalendar.getTime()));
@@ -104,6 +106,20 @@ public class FragmentCalendarChart extends Fragment {
 
         edit_from = view.findViewById(R.id.edit_from);
         edit_to = view.findViewById(R.id.edit_to);
+
+        Date time = new Date();
+        String today = (new SimpleDateFormat("yyyy.MM.dd")).format(time);
+        String before = sdf_string.format(time);
+        before = ((Integer.parseInt(before))-6)+"";
+        Date date_before = null;
+        try {
+            date_before = sdf_string.parse(before);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        before = (new SimpleDateFormat("yyyy.MM.dd")).format(date_before);
+        edit_from.setText(before);
+        edit_to.setText(today);
 
         mukDBHelper = MukDBHelper.getInstance(getContext());
         TextView tvCal = view.findViewById(R.id.tv_cal);
@@ -150,12 +166,22 @@ public class FragmentCalendarChart extends Fragment {
             }
         });
 
-        date_from = edit_from.getText().toString();
-        date_to = edit_to.getText().toString();
+        raw_date_from = edit_from.getText().toString();
+        raw_date_to = edit_to.getText().toString();
+        try {
+            Date from = sdf_string.parse(raw_date_from);
+            date_from = String.valueOf(from);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            Date to = sdf_string.parse(raw_date_to);
+            date_to=String.valueOf(to);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Date time = new Date();
-        String today = (new SimpleDateFormat("yyyyMMdd")).format(time);
-        Food weekResult = mukDBHelper.weekRecord(today);
+        Food weekResult = mukDBHelper.weekRecord(date_from, date_to);
 
         Log.d(TAG, "칼로리: " + weekResult.getCalorie() + "kcal");
         Log.d(TAG, "탄수회물: " + weekResult.getCarbohydrate() + "g");
