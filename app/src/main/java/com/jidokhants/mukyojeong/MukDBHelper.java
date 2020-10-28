@@ -258,10 +258,9 @@ public class MukDBHelper extends SQLiteOpenHelper {
         return records;
     }
 
-    public Food weekRecord(String date) {
+    public Food weekRecord(String date_from, String date_to) {
 
-        String before = (Integer.parseInt(date) - 6) + "";
-        String selection = "'" + before + "' AND '" + date + "' GROUP BY rcd_date)";
+        String selection = "'" + date_from + "' AND '" + date_to + "' GROUP BY rcd_date)";
         Cursor cursor = db.rawQuery(MukDBContract.SQL_RECORD_WEEK_SELECT + selection, null);
 
         cursor.moveToNext();
