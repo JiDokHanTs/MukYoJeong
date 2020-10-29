@@ -11,9 +11,7 @@ import com.jidokhants.mukyojeong.model.Food;
 import com.jidokhants.mukyojeong.model.FoodItem;
 import com.jidokhants.mukyojeong.model.Record;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MukDBHelper extends SQLiteOpenHelper {
     private static volatile MukDBHelper instance;
@@ -101,8 +99,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
             double vitaminARE = cursor.getDouble(30);
             double retinol = cursor.getDouble(31);
             double betaCarotene = cursor.getDouble(32);
-            double vitaminB = cursor.getDouble(33);
-            double vitaminD = cursor.getDouble(34);
+            double vitaminD = cursor.getDouble(33);
+            double vitaminK = cursor.getDouble(34);
             double panto = cursor.getDouble(35);
             double vitaminB6 = cursor.getDouble(36);
             double biotin = cursor.getDouble(37);
@@ -112,8 +110,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
 
             Food food = new Food(id, dBGroup, commercial, name, from, subCategory, servingSize, unit, totalGram, totalML,
                     calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
-                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
-                    vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminD,
+                    vitaminK, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
             foodList.add(food);
         }
         return foodList;
@@ -171,8 +169,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
         double vitaminARE = cursor.getDouble(35);
         double retinol = cursor.getDouble(36);
         double betaCarotene = cursor.getDouble(37);
-        double vitaminB = cursor.getDouble(38);
-        double vitaminD = cursor.getDouble(39);
+        double vitaminD = cursor.getDouble(38);
+        double vitaminK = cursor.getDouble(39);
         double panto = cursor.getDouble(40);
         double vitaminB6 = cursor.getDouble(41);
         double biotin = cursor.getDouble(42);
@@ -182,8 +180,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
 
         Food food = new Food(fid, dBGroup, commercial, name, from, subCategory, servingSize, unit, totalGram, totalML,
                 calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
-                salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
-                vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+                salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminD,
+                vitaminK, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
         return (new Record(id, tempDate, tempMeal, tempRatio, food));
     }
 
@@ -232,8 +230,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
             double vitaminARE = cursor.getDouble(35);
             double retinol = cursor.getDouble(36);
             double betaCarotene = cursor.getDouble(37);
-            double vitaminB = cursor.getDouble(38);
-            double vitaminD = cursor.getDouble(39);
+            double vitaminD = cursor.getDouble(38);
+            double vitaminK = cursor.getDouble(39);
             double panto = cursor.getDouble(40);
             double vitaminB6 = cursor.getDouble(41);
             double biotin = cursor.getDouble(42);
@@ -243,8 +241,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
 
             Food food = new Food(fid, dBGroup, commercial, name, from, subCategory, servingSize, unit, totalGram, totalML,
                     calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
-                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
-                    vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminD,
+                    vitaminK, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
             records.add(new Record(id, tempDate, tempMeal, tempRatio, food));
             ;
         }
@@ -281,8 +279,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
         double vitaminARE = cursor.getDouble(21);
         double retinol = cursor.getDouble(22);
         double betaCarotene = cursor.getDouble(23);
-        double vitaminB = cursor.getDouble(24);
-        double vitaminD = cursor.getDouble(25);
+        double vitaminD = cursor.getDouble(24);
+        double vitaminK = cursor.getDouble(25);
         double panto = cursor.getDouble(26);
         double vitaminB6 = cursor.getDouble(27);
         double biotin = cursor.getDouble(28);
@@ -291,60 +289,86 @@ public class MukDBHelper extends SQLiteOpenHelper {
         double omega6FattyAcids = cursor.getDouble(31);
         Log.d("MUKDB", "count: " + fid);
         Log.d("MUKDB", "calorie: " + cursor.getDouble(1));
-        Food food = new Food(fid, calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium, salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB, vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+        Food food = new Food(fid, calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium, salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminD, vitaminK, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
         return food;
     }
 
-    public ArrayList<Food> getRecommendFood(Food start, Food end) {
+    public ArrayList<Food> getRecommendFood(int minIndex, int maxIndex, double rangeMax) {
         ArrayList<Food> result = new ArrayList<>();
         String selection = " WHERE ";
         String orderBy = " ORDER BY ";
+        String minCol = "";
+        String maxCol = "";
 
-        if (!((int) (start.getCalorie()) == 0) || !((int) (end.getCalorie()) == 0)) {
-            selection += MukDBContract.FOOD_COL_CALORIE + " >= " + start.getCalorie() + " AND " + MukDBContract.FOOD_COL_CALORIE + " < " + end.getCalorie();
+        switch (minIndex) {
+            case 0:
+                minCol = MukDBContract.FOOD_COL_CALORIE;
+                break;
+            case 1:
+                minCol = MukDBContract.FOOD_COL_CARBO;
+                break;
+            case 2:
+                minCol = MukDBContract.FOOD_COL_PROTEIN;
+                break;
+            case 3:
+                minCol = MukDBContract.FOOD_COL_FAT;
+                break;
+            case 4:
+                minCol = MukDBContract.FOOD_COL_MOISTURE;
+                break;
+            case 5:
+                minCol = MukDBContract.FOOD_COL_VITA_K;
+                break;
+            case 6:
+                minCol = MukDBContract.FOOD_COL_VITA_C;
+                break;
+            case 7:
+                minCol = MukDBContract.FOOD_COL_FIBER;
+                break;
+            case 8:
+                minCol = MukDBContract.FOOD_COL_FE;
+                break;
+            case 9:
+                minCol = MukDBContract.FOOD_COL_SALT;
+                break;
         }
-        orderBy += MukDBContract.FOOD_COL_CALORIE;
-        if (!((int) (start.getCarbohydrate()) == 0) || !((int) (end.getCarbohydrate()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_CARBO + " >= " + start.getCarbohydrate() + " AND " + MukDBContract.FOOD_COL_CARBO + " < " + end.getCarbohydrate();
+        switch (maxIndex) {
+            case 0:
+                maxCol = MukDBContract.FOOD_COL_CALORIE;
+                break;
+            case 1:
+                maxCol = MukDBContract.FOOD_COL_CARBO;
+                break;
+            case 2:
+                maxCol = MukDBContract.FOOD_COL_PROTEIN;
+                break;
+            case 3:
+                maxCol = MukDBContract.FOOD_COL_FAT;
+                break;
+            case 4:
+                maxCol = MukDBContract.FOOD_COL_MOISTURE;
+                break;
+            case 5:
+                maxCol = MukDBContract.FOOD_COL_VITA_K;
+                break;
+            case 6:
+                maxCol = MukDBContract.FOOD_COL_VITA_C;
+                break;
+            case 7:
+                maxCol = MukDBContract.FOOD_COL_FIBER;
+                break;
+            case 8:
+                maxCol = MukDBContract.FOOD_COL_FE;
+                break;
+            case 9:
+                maxCol = MukDBContract.FOOD_COL_SALT;
+                break;
         }
-        orderBy += ", " + MukDBContract.FOOD_COL_CARBO;
-        if (!((int) (start.getProtein()) == 0) || !((int) (end.getProtein()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_PROTEIN + " >= " + start.getProtein() + " AND " + MukDBContract.FOOD_COL_PROTEIN + " < " + end.getProtein();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_PROTEIN;
-        if (!((int) (start.getFat()) == 0) || !((int) (end.getFat()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_FAT + " >= " + start.getFat() + " AND " + MukDBContract.FOOD_COL_FAT + " < " + end.getFat();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_FAT;
-        if (!((int) (start.getMoisture()) == 0) || !((int) (end.getMoisture()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_MOISTURE + " >= " + start.getMoisture() + " AND " + MukDBContract.FOOD_COL_MOISTURE + " < " + end.getMoisture();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_MOISTURE;
-        if (!((int) (start.getVitaminD()) == 0) || !((int) (end.getVitaminD()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_VITA_D + " >= " + start.getVitaminD() + " AND " + MukDBContract.FOOD_COL_VITA_D + " < " + end.getVitaminD();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_VITA_D;
-        if (!((int) (start.getVitaminC()) == 0) || !((int) (end.getVitaminC()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_VITA_C + " >= " + start.getVitaminC() + " AND " + MukDBContract.FOOD_COL_VITA_C + " < " + end.getVitaminC();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_VITA_C;
-        if (!((int) (start.getFiber()) == 0) || !((int) (end.getFiber()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_FIBER + " >= " + start.getFiber() + " AND " + MukDBContract.FOOD_COL_FIBER + " < " + end.getFiber();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_FIBER;
-        if (!((int) (start.getFe()) == 0) || !((int) (end.getFe()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_FE + " >= " + start.getFe() + " AND " + MukDBContract.FOOD_COL_FE + " < " + end.getFe();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_FE;
-        if (!((int) (start.getSalt()) == 0) || !((int) (end.getSalt()) == 0)) {
-            selection += " AND " + MukDBContract.FOOD_COL_SALT + " >= " + start.getSalt() + " AND " + MukDBContract.FOOD_COL_SALT + " < " + end.getSalt();
-        }
-        orderBy += ", " + MukDBContract.FOOD_COL_SALT;
-        if (selection.equals(" WHERE "))
-            selection = "";
-        else if (selection.contains("WHERE  AND"))
-            selection = selection.replaceAll("WHERE  AND", "WHERE");
+        selection += minCol+" <= "+rangeMax +" AND " + MukDBContract.FOOD_COL_COMM +"='품목대표'";
+        orderBy += minCol+" DESC, "+maxCol;
 
+
+        Log.d("MUKDB", MukDBContract.SQL_FOOD_SELECT + selection + orderBy + " LIMIT 3");
         Cursor cursor = db.rawQuery(MukDBContract.SQL_FOOD_SELECT + selection + orderBy + " LIMIT 3", null);
 
         while (cursor.moveToNext()) {
@@ -381,8 +405,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
             double vitaminARE = cursor.getDouble(30);
             double retinol = cursor.getDouble(31);
             double betaCarotene = cursor.getDouble(32);
-            double vitaminB = cursor.getDouble(33);
-            double vitaminD = cursor.getDouble(34);
+            double vitaminD = cursor.getDouble(33);
+            double vitaminK = cursor.getDouble(34);
             double panto = cursor.getDouble(35);
             double vitaminB6 = cursor.getDouble(36);
             double biotin = cursor.getDouble(37);
@@ -392,8 +416,8 @@ public class MukDBHelper extends SQLiteOpenHelper {
 
             Food food = new Food(id, dBGroup, commercial, name, from, subCategory, servingSize, unit, totalGram, totalML,
                     calorie, moisture, protein, fat, carbohydrate, sugars, fiber, calcium, fe, magnesium, phosphorus, potassium,
-                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminB,
-                    vitaminD, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
+                    salt, zinc, copper, manganese, selenium, iodine, chlorine, vitaminA, vitaminARE, retinol, betaCarotene, vitaminD,
+                    vitaminK, panto, vitaminB6, biotin, vitaminC, omega3FattyAcids, omega6FattyAcids);
 
             result.add(food);
         }

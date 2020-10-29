@@ -34,8 +34,8 @@ public class Food {
     private double vitaminARE;
     private double retinol;
     private double betaCarotene;
-    private double vitaminB;
     private double vitaminD;
+    private double vitaminK;
     private double panto;
     private double vitaminB6;
     private double biotin;
@@ -47,7 +47,7 @@ public class Food {
         this.id = id;
     }
 
-    public Food(int id, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminB, double vitaminD, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
+    public Food(int id, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminD, double vitaminK, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
         this.id = id;
         this.calorie = calorie;
         this.moisture = moisture;
@@ -72,8 +72,8 @@ public class Food {
         this.vitaminARE = vitaminARE;
         this.retinol = retinol;
         this.betaCarotene = betaCarotene;
-        this.vitaminB = vitaminB;
         this.vitaminD = vitaminD;
+        this.vitaminK = vitaminK;
         this.panto = panto;
         this.vitaminB6 = vitaminB6;
         this.biotin = biotin;
@@ -82,7 +82,7 @@ public class Food {
         this.omega6FattyAcids = omega6FattyAcids;
     }
 
-    public Food(int id, String dBGroup, String commercial, String name, String from, String subCategory, double servingSize, String unit, double totalGram, double totalML, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminB, double vitaminD, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
+    public Food(int id, String dBGroup, String commercial, String name, String from, String subCategory, double servingSize, String unit, double totalGram, double totalML, double calorie, double moisture, double protein, double fat, double carbohydrate, double sugars, double fiber, double calcium, double fe, double magnesium, double phosphorus, double potassium, double salt, double zinc, double copper, double manganese, double selenium, double iodine, double chlorine, double vitaminA, double vitaminARE, double retinol, double betaCarotene, double vitaminD, double vitaminK, double panto, double vitaminB6, double biotin, double vitaminC, double omega3FattyAcids, double omega6FattyAcids) {
         this.id = id;
         this.dBGroup = dBGroup;
         this.commercial = commercial;
@@ -116,8 +116,8 @@ public class Food {
         this.vitaminARE = vitaminARE;
         this.retinol = retinol;
         this.betaCarotene = betaCarotene;
-        this.vitaminB = vitaminB;
         this.vitaminD = vitaminD;
+        this.vitaminK = vitaminK;
         this.panto = panto;
         this.vitaminB6 = vitaminB6;
         this.biotin = biotin;
@@ -390,20 +390,20 @@ public class Food {
         this.betaCarotene = betaCarotene;
     }
 
-    public double getVitaminB() {
-        return vitaminB;
-    }
-
-    public void setVitaminB(double vitaminB) {
-        this.vitaminB = vitaminB;
-    }
-
     public double getVitaminD() {
         return vitaminD;
     }
 
     public void setVitaminD(double vitaminD) {
         this.vitaminD = vitaminD;
+    }
+
+    public double getVitaminK() {
+        return vitaminK;
+    }
+
+    public void setVitaminK(double vitaminK) {
+        this.vitaminK = vitaminK;
     }
 
     public double getPanto() {

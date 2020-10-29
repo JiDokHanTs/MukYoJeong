@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -223,8 +222,14 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
 
         Food analysisResult = mukDBHelper.weekRecord(date_from, date_to);
 
-        Food recommendStart = new Food(-1);
-        Food recommendEnd = new Food(-2);
+        int minColumnIndex = 1111;
+        int maxColumnIndex = -1;
+
+        int minValue = 99999;
+        int maxValue = -1;
+
+        double rangeMax = 0;
+        int tempValue = 0;
 
         String[] states = new String[]{"under", "", "over"};
         int stateIndex;
@@ -244,173 +249,205 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
 
             if (analysisResult.getCalorie() < Standard.calorie * 0.7) {
                 stateIndex = 0;
-                recommendStart.setCalorie(Standard.calorie * 0.7 - analysisResult.getCalorie());
-                recommendEnd.setCalorie(Standard.calorie * 1.2 - analysisResult.getCalorie());
                 tvCal.setTextColor(Color.RED);
             } else if (analysisResult.getCalorie() < Standard.calorie * 1.2) {
                 stateIndex = 1;
-                recommendStart.setCalorie(0);
-                recommendEnd.setCalorie(Standard.calorie * 1.2 - analysisResult.getCalorie());
             } else {
                 stateIndex = 2;
-                recommendStart.setCalorie(0);
-                recommendEnd.setCalorie(0);
                 tvCal.setTextColor(Color.RED);
             }
-            tvCal.setText("칼로리: " + Math.round(analysisResult.getCalorie()) + " kcal (" + (int) (analysisResult.getCalorie() / Standard.calorie * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getCalorie() / Standard.calorie * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 0;
+                rangeMax = Standard.calorie * 1.2 - analysisResult.getCalorie();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 0;
+            }
+            tvCal.setText("칼로리: " + Math.round(analysisResult.getCalorie()) + " kcal (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getCarbohydrate() < Standard.carbohydrate * 0.55) {
                 stateIndex = 0;
-                recommendStart.setCarbohydrate(Standard.carbohydrate * 0.55 - analysisResult.getCarbohydrate());
-                recommendEnd.setCarbohydrate(Standard.carbohydrate * 1.2 - analysisResult.getCarbohydrate());
                 tvCab.setTextColor(Color.RED);
             } else if (analysisResult.getCarbohydrate() < Standard.carbohydrate * 1.2) {
                 stateIndex = 1;
-                recommendStart.setCarbohydrate(0);
-                recommendEnd.setCarbohydrate(Standard.carbohydrate * 1.2 - analysisResult.getCarbohydrate());
             } else {
                 stateIndex = 2;
-                recommendStart.setCarbohydrate(0);
-                recommendEnd.setCarbohydrate(0);
                 tvCab.setTextColor(Color.RED);
             }
-            tvCab.setText("탄수회물: " + Math.round(analysisResult.getCarbohydrate()) + " g (" + (int) (analysisResult.getCarbohydrate() / Standard.carbohydrate * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getCarbohydrate() / Standard.carbohydrate * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 1;
+                rangeMax = Standard.carbohydrate * 1.2 - analysisResult.getCarbohydrate();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 1;
+            }
+            tvCab.setText("탄수회물: " + Math.round(analysisResult.getCarbohydrate()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getProtein() < Standard.protein * 0.7) {
                 stateIndex = 0;
-                recommendStart.setProtein(Standard.protein * 0.7 - analysisResult.getProtein());
-                recommendEnd.setProtein(Standard.protein * 1.2 - analysisResult.getProtein());
                 tvPro.setTextColor(Color.RED);
             } else if (analysisResult.getProtein() < Standard.protein * 1.2) {
                 stateIndex = 1;
-                recommendStart.setProtein(0);
-                recommendEnd.setProtein(Standard.protein * 1.2 - analysisResult.getProtein());
             } else {
                 stateIndex = 2;
-                recommendStart.setProtein(0);
-                recommendEnd.setProtein(0);
                 tvPro.setTextColor(Color.RED);
             }
-            tvPro.setText("단백질: " + Math.round(analysisResult.getProtein()) + " g (" + (int) (analysisResult.getProtein() / Standard.protein * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getProtein() / Standard.protein * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 2;
+                rangeMax = Standard.protein * 1.2 - analysisResult.getProtein();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 2;
+            }
+            tvPro.setText("단백질: " + Math.round(analysisResult.getProtein()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getFat() < Standard.fat * 0.7) {
                 stateIndex = 0;
-                recommendStart.setFat(Standard.fat * 0.7 - analysisResult.getFat());
-                recommendEnd.setFat(Standard.fat * 1.2 - analysisResult.getFat());
                 tvFat.setTextColor(Color.RED);
             } else if (analysisResult.getFat() < Standard.fat * 1.2) {
                 stateIndex = 1;
-                recommendStart.setFat(0);
-                recommendEnd.setFat(Standard.fat * 1.2 - analysisResult.getFat());
             } else {
                 stateIndex = 2;
-                recommendStart.setFat(0);
-                recommendEnd.setFat(0);
                 tvFat.setTextColor(Color.RED);
             }
-            tvFat.setText("지방: " + Math.round(analysisResult.getFat()) + " g (" + (int) (analysisResult.getFat() / Standard.fat * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getFat() / Standard.fat * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 3;
+                rangeMax = Standard.fat * 1.2 - analysisResult.getFat();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 3;
+            }
+            tvFat.setText("지방: " + Math.round(analysisResult.getFat()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getMoisture() < Standard.moisture * 0.7) {
                 stateIndex = 0;
-                recommendStart.setMoisture(Standard.moisture * 0.7 - analysisResult.getMoisture());
-                recommendEnd.setMoisture(Standard.moisture * 1.2 - analysisResult.getMoisture());
                 tvMo.setTextColor(Color.RED);
             } else if (analysisResult.getMoisture() < Standard.moisture * 1.2) {
                 stateIndex = 1;
-                recommendStart.setMoisture(0);
-                recommendEnd.setMoisture(Standard.moisture * 1.2 - analysisResult.getMoisture());
             } else {
                 stateIndex = 2;
-                recommendStart.setMoisture(0);
-                recommendEnd.setMoisture(0);
                 tvMo.setTextColor(Color.RED);
             }
-            tvMo.setText("수분: " + Math.round(analysisResult.getMoisture())+ " ml (" + (int) (analysisResult.getMoisture() / Standard.moisture * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getMoisture() / Standard.moisture * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 4;
+                rangeMax = Standard.moisture * 1.2 - analysisResult.getMoisture();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 4;
+            }
+            tvMo.setText("수분: " + Math.round(analysisResult.getMoisture()) + " ml (" + tempValue + "%) " + states[stateIndex]);
 
-            if (analysisResult.getVitaminD() < Standard.vitaminD * 0.7) {
+            if (analysisResult.getVitaminK() < Standard.vitaminD * 0.7) {
                 stateIndex = 0;
-                recommendStart.setMoisture(Standard.vitaminD * 0.7 - analysisResult.getVitaminD());
-                recommendEnd.setMoisture(Standard.vitaminD * 1.2 - analysisResult.getVitaminD());
                 tvVD.setTextColor(Color.RED);
-            } else if (analysisResult.getVitaminD() < Standard.vitaminD * 1.2) {
+            } else if (analysisResult.getVitaminK() < Standard.vitaminD * 1.2) {
                 stateIndex = 1;
-                recommendStart.setMoisture(0);
-                recommendEnd.setMoisture(Standard.vitaminD * 1.2 - analysisResult.getVitaminD());
             } else {
                 stateIndex = 2;
-                recommendStart.setMoisture(0);
-                recommendEnd.setMoisture(0);
                 tvVD.setTextColor(Color.RED);
             }
-            tvVD.setText("비타민D: " + Math.round(analysisResult.getVitaminD()) + " mmg (" + (int) (analysisResult.getVitaminD() / Standard.vitaminD * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getVitaminK() / Standard.vitaminD * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 5;
+                rangeMax = Standard.vitaminD * 1.2 - analysisResult.getVitaminK();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 5;
+            }
+            tvVD.setText("비타민K: " + Math.round(analysisResult.getVitaminK()) + " ㎍ (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getVitaminC() < Standard.vitaminC * 0.7) {
                 stateIndex = 0;
-                recommendStart.setVitaminC(Standard.vitaminC * 0.7 - analysisResult.getVitaminC());
-                recommendEnd.setVitaminC(Standard.vitaminC * 1.2 - analysisResult.getVitaminC());
                 tvVC.setTextColor(Color.RED);
             } else if (analysisResult.getVitaminC() < Standard.vitaminC * 1.2) {
                 stateIndex = 1;
-                recommendStart.setVitaminC(0);
-                recommendEnd.setVitaminC(Standard.vitaminC * 1.2 - analysisResult.getVitaminC());
+
             } else {
                 stateIndex = 2;
-                recommendStart.setVitaminC(0);
-                recommendEnd.setVitaminC(0);
                 tvVC.setTextColor(Color.RED);
             }
-            tvVC.setText("비타민C: " + Math.round(analysisResult.getVitaminC()) + " mmg (" + (int) (analysisResult.getVitaminC() / Standard.vitaminC * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getVitaminC() / Standard.vitaminC * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 6;
+                rangeMax = Standard.vitaminC * 1.2 - analysisResult.getVitaminC();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 6;
+            }
+            tvVC.setText("비타민C: " + Math.round(analysisResult.getVitaminC()) + " ㎍ (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getFiber() < Standard.fiber * 0.7) {
                 stateIndex = 0;
-                recommendStart.setFiber(Standard.fiber * 0.7 - analysisResult.getFiber());
-                recommendEnd.setFiber(Standard.fiber * 1.2 - analysisResult.getFiber());
                 tvFiber.setTextColor(Color.RED);
             } else if (analysisResult.getFiber() < Standard.fiber * 1.2) {
                 stateIndex = 1;
-                recommendStart.setFiber(0);
-                recommendEnd.setFiber(Standard.fiber * 1.2 - analysisResult.getFiber());
             } else {
                 stateIndex = 2;
-                recommendStart.setFiber(0);
-                recommendEnd.setFiber(0);
                 tvFiber.setTextColor(Color.RED);
             }
-            tvFiber.setText("식이섬유: " + Math.round(analysisResult.getFiber()) + " g (" + (int) (analysisResult.getFiber() / Standard.fiber * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getFiber() / Standard.fiber * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 7;
+                rangeMax = Standard.fiber * 1.2 - analysisResult.getFiber();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 7;
+            }
+            tvFiber.setText("식이섬유: " + Math.round(analysisResult.getFiber()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getFe() < Standard.fe * 0.7) {
                 stateIndex = 0;
-                recommendStart.setFe(Standard.fe * 0.7 - analysisResult.getFe());
-                recommendEnd.setFe(Standard.fe * 1.2 - analysisResult.getFe());
                 tvFe.setTextColor(Color.RED);
             } else if (analysisResult.getFe() < Standard.fe * 1.2) {
                 stateIndex = 1;
-                recommendStart.setFe(0);
-                recommendEnd.setFe(Standard.fe * 1.2 - analysisResult.getFe());
             } else {
                 stateIndex = 2;
-                recommendStart.setFe(0);
-                recommendEnd.setFe(0);
                 tvFe.setTextColor(Color.RED);
             }
-            tvFe.setText("철분: " + Math.round(analysisResult.getFe()) + " mmg (" + (int) (analysisResult.getFe() / Standard.fe * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getFe() / Standard.fe * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 8;
+                rangeMax = Standard.fe * 1.2 - analysisResult.getFe();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 8;
+            }
+            tvFe.setText("철분: " + Math.round(analysisResult.getFe()) + " ㎎ (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getSalt() < Standard.salt * 0.7) {
                 stateIndex = 0;
-                recommendStart.setSalt(Standard.salt * 0.7 - analysisResult.getSalt());
-                recommendEnd.setSalt(Standard.salt * 1.2 - analysisResult.getSalt());
+
                 tvSalt.setTextColor(Color.RED);
             } else if (analysisResult.getSalt() < Standard.salt * 1.2) {
                 stateIndex = 1;
-                recommendStart.setSalt(0);
-                recommendEnd.setSalt(Standard.salt * 1.2 - analysisResult.getSalt());
             } else {
                 stateIndex = 2;
-                recommendStart.setSalt(0);
-                recommendEnd.setSalt(0);
                 tvSalt.setTextColor(Color.RED);
             }
-            tvSalt.setText("나트륨: " + Math.round(analysisResult.getSalt()) + " g (" + (int) (analysisResult.getSalt() / Standard.salt * 100) + "%) " + states[stateIndex]);
+            tempValue = (int) (analysisResult.getSalt() / Standard.salt * 100);
+            if (tempValue < minValue) {
+                minValue = tempValue;
+                minColumnIndex = 9;
+                rangeMax = Standard.salt * 1.2 - analysisResult.getSalt();
+            } else if (tempValue > maxValue) {
+                maxValue = tempValue;
+                maxColumnIndex = 9;
+            }
+            tvSalt.setText("나트륨: " + Math.round(analysisResult.getSalt()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             radarChart.clear();
             radarChart.invalidate();
@@ -439,18 +476,18 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
         } else {
             Toast.makeText(getActivity(), "날짜를 다시 선택해주세요.", Toast.LENGTH_SHORT).show();
         }
-
-        recommendFoods(recommendStart, recommendEnd);
+        recommendFoods(minColumnIndex, maxColumnIndex, rangeMax);
     }
-    public void recommendFoods(Food start, Food end){
-        recommendFoodResult = mukDBHelper.getRecommendFood(start, end);
+
+    public void recommendFoods(int minIndex, int maxIndex, double rangeMax) {
+        recommendFoodResult = mukDBHelper.getRecommendFood(maxIndex, maxIndex, rangeMax);
         String temp = "";
-        if (recommendFoodResult.size()!=0){
-            for (Food food : recommendFoodResult){
-                temp+=food.getName() + "\n";
+        if (recommendFoodResult.size() != 0) {
+            for (Food food : recommendFoodResult) {
+                temp += food.getName() + "\n";
             }
-        }else {
-            temp= "추천하는 음식이 없습니다.";
+        } else {
+            temp = "추천하는 음식이 없습니다.";
         }
         tvRecommends.setText(temp);
 

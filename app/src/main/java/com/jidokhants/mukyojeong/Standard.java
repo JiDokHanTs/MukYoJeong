@@ -25,6 +25,7 @@ public class Standard { //1일 섭취량 기준
     public static final double vitaminARE = 650; //mmg
     //public static final double vitaminB;
     public static final double vitaminD = 10; //mmg
+    public static final double vitaminK = 65; //mmg
     //public static final double panto;
     public static final double vitaminB6 = 1.4; //mg
     public static final double biotin = 30; // mmg
