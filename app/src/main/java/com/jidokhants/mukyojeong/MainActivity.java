@@ -1,9 +1,11 @@
 package com.jidokhants.mukyojeong;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.jidokhants.mukyojeong.model.FoodItem;
+import com.kakao.auth.Session;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentSetting fragmentSetting;
     DrawerLayout drawerLayout;
 
+    GoogleSignInAccount acct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        acct = GoogleSignIn.getLastSignedInAccount(this);
+        Session session = Session.getCurrentSession();
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -119,6 +129,25 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        View navHeader = leftNavigationView.getHeaderView(0);
+        TextView tvProfileName = navHeader.findViewById(R.id.nav_profile_name);
+        TextView tvProfileEmail = navHeader.findViewById(R.id.nav_profile_email);
+        String name="";
+        String email="";
+        if(acct != null){
+            name = acct.getDisplayName();
+            email = acct.getEmail();
+            tvProfileName.setText(name);
+            tvProfileEmail.setText(email);
+        }else if(session.isOpened()){
+            Intent intent = getIntent();
+            name = intent.getStringExtra("name");
+            email = intent.getStringExtra("email");
+            tvProfileName.setText(name);
+            tvProfileEmail.setText(email);
+        }
+
         try {
             if(!isExistFoodDB()){
                 copyFoodDB();

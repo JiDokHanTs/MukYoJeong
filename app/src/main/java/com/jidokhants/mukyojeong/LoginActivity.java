@@ -209,6 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (profile != null) {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     intent.putExtra("name", profile.getNickname());
+                                    intent.putExtra("email", kakaoAccount.getEmail());
                                     startActivity(intent);
                                     finish();
                                 } else if (kakaoAccount.profileNeedsAgreement() == OptionalBoolean.TRUE) {
