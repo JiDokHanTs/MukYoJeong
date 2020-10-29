@@ -37,25 +37,42 @@
                 android:id="@+id/edit_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="47dp"
                 android:focusable="false"
                 android:text="2020.10.10"
                 android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/radarChart"
                 app:layout_constraintEnd_toStartOf="@+id/edit_to"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/radarChart"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/edit_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="39dp"
                 android:focusable="false"
                 android:text="2020.10.20"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/edit_from"
-                app:layout_constraintBottom_toTopOf="@id/radarChart"/>
+                app:layout_constraintBottom_toTopOf="@+id/radarChart"
+                app:layout_constraintEnd_toStartOf="@+id/btn_chk_analysis"
+                app:layout_constraintStart_toEndOf="@+id/edit_from" />
 
-        <com.github.mikephil.charting.charts.RadarChart
+            <Button
+                android:id="@+id/btn_chk_analysis"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:background="@android:color/transparent"
+                android:text="조회"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/radarChart"
+                app:layout_constraintStart_toEndOf="@+id/edit_to"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.964" />
+
+            <com.github.mikephil.charting.charts.RadarChart
             android:id="@+id/radarChart"
             android:layout_width="0dp"
             android:layout_height="250dp"
@@ -181,6 +198,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_fe" />
 
         </LinearLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -218,6 +237,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <TextView
+                android:id="@+id/tv_recommend_foods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
