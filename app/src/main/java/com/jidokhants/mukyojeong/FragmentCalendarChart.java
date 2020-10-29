@@ -53,6 +53,9 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
     String raw_date_from, raw_date_to, date_from, date_to;
     SimpleDateFormat sdf_string = new SimpleDateFormat("yyyyMMdd");
 
+    TextView[] menu_name = new TextView[3];
+    TextView[] menu_info = new TextView[3];
+
     ScrollView chartScrollView;
 
     Button analysisButton;
@@ -140,7 +143,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
         tvFe = view.findViewById(R.id.tv_fe);
         tvSalt = view.findViewById(R.id.tv_salt);
 
-        tvRecommends = view.findViewById(R.id.tv_recommend_foods);
+//        tvRecommends = view.findViewById(R.id.tv_recommend_foods);
 
         analysisButton = view.findViewById(R.id.btn_chk_analysis);
         analysisButton.setOnClickListener(this);
@@ -201,6 +204,12 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         radarChart.setData(radarData);
 
+        menu_name[0] = view.findViewById(R.id.menu_name1);
+        menu_name[1] = view.findViewById(R.id.menu_name2);
+        menu_name[2] = view.findViewById(R.id.menu_name3);
+        menu_info[0] = view.findViewById(R.id.menu_info1);
+        menu_info[1] = view.findViewById(R.id.menu_info2);
+        menu_info[2] = view.findViewById(R.id.menu_info3);
 
         return view;
     }
@@ -482,14 +491,20 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
     public void recommendFoods(int minIndex, int maxIndex, double rangeMax) {
         recommendFoodResult = mukDBHelper.getRecommendFood(maxIndex, maxIndex, rangeMax);
         String temp = "";
-        if (recommendFoodResult.size() != 0) {
-            for (Food food : recommendFoodResult) {
-                temp += food.getName() + "\n";
+        if (recommendFoodResult.size()!=0){
+            for (int i =0;i<recommendFoodResult.size();i++){
+                temp = recommendFoodResult.get(i).getName();
+                menu_name[i].setText(temp);
+                menu_name[i].setVisibility(View.VISIBLE);
+
+                //temp+=food.getName() + "\n";
             }
-        } else {
-            temp = "추천하는 음식이 없습니다.";
+        }else {
+            temp= "추천하는 음식이 없습니다.";
+            menu_name[0].setText(temp);
+            menu_name[0].setVisibility(View.VISIBLE);
         }
-        tvRecommends.setText(temp);
+//        tvRecommends.setText(temp);
 
     }
 }
