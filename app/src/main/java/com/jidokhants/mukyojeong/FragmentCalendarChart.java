@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import com.jidokhants.mukyojeong.model.Food;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -53,6 +55,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
     String raw_date_from, raw_date_to, date_from, date_to;
     SimpleDateFormat sdf_string = new SimpleDateFormat("yyyyMMdd");
 
+    TextView tvNeedNutrient;
     TextView[] menu_name = new TextView[3];
     TextView[] menu_info = new TextView[3];
 
@@ -62,6 +65,128 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
 
     ArrayList<Food> recommendFoodResult;
     TextView tvRecommends;
+
+    String lackNutrient = "";
+
+    ImageView bestFoodImage;
+
+    final String[] icon_meat = {"육류구이",
+            "육류튀김",
+            "육류국.탕",
+            "육류볶음",
+            "육류찌개.전골",
+            "육류전",
+            "육류조림",
+            "육류찜",
+            "육류",
+            "치킨류",
+            "난류"
+    };
+    final String[] icon_vege_fruit = {
+            "채소류구이",
+            "채소류국.탕",
+            "나물.숙채류",
+            "나물.채소류무침",
+            "기타 생채.무침류",
+            "장아찌.절임류",
+            "채소류전",
+            "부침류",
+            "채소류찌개.전골",
+            "채소류튀김",
+            "채소류찜",
+            "만두류",
+            "기타 면 및 만두류",
+            "샐러드",
+            "곡류 및 그 제품",
+            "감자 및 전분류",
+            "채소류",
+            "버섯류",
+            "과실류",
+            "곡류 및 서류",
+            "김치",
+            "채소류볶음",
+            "채소류조림"
+    };
+    final String[] icon_rice = {
+            "김밥(초밥)류",
+            "기타 밥류",
+            "덮밥류",
+            "비빔밥류",
+            "볶음밥류",
+            "쌀밥.잡곡밥류",
+            "죽류",
+            "떡볶이류",
+            "스프류",
+            "떡류"
+    };
+    final String[] icon_seafood = {
+            "어패류구이",
+            "어패류국.탕",
+            "회류",
+            "어패류찜",
+            "어패류무침",
+            "어패류볶음",
+            "어패류전",
+            "어패류조림",
+            "어패류찌개.전골",
+            "어패류튀김",
+            "젓갈류",
+            "어패류 및 기타 수산물",
+            "해조류",
+            "어류",
+            "수산가공품",
+            "패류",
+            "갑각류",
+    };
+    final String[] icon_noodle = {
+            "중식면류",
+            "라면류",
+            "국수류",
+            "스파게티류"
+    };
+    final String[] icon_bread = {
+            "앙금빵류",
+            "크림빵류",
+            "피자류",
+            "샌드위치류",
+            "튀김빵류(도넛, 꽈배기 등)",
+            "케이크류",
+            "페이스트리류",
+            "기타 빵류",
+            "식빵류",
+            "버거류"
+    };
+    final String[] icon_snack = {
+            "한과류",
+            "빙수류",
+            "견과류 및 종실류"
+    };
+    final String[] icon_milk = {
+            "우유 및 유제품류",
+            "유지류",
+            "차류",
+            "음료류",
+            "주류",
+            "기타 음료 및 차류"
+    };
+    final String[] icon_food = {
+            "타 국 및 탕류",
+            "기타 볶음류",
+            "기타",
+            "적류",
+            "포류",
+            "냉국류",
+            "기타 전.적 및 부침류",
+            "기타 조림류",
+            "기타 찜류",
+            "기타 튀김류",
+            "두족류",
+            "당류",
+            "두류",
+            "조미료류",
+            "조리가공품류"
+    };
+
     DatePickerDialog.OnDateSetListener myDatePicker1 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -143,6 +268,9 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
         tvFe = view.findViewById(R.id.tv_fe);
         tvSalt = view.findViewById(R.id.tv_salt);
 
+        tvNeedNutrient = view.findViewById(R.id.tv_need_nutrient);
+
+        bestFoodImage = view.findViewById(R.id.img_bestmenu);
 //        tvRecommends = view.findViewById(R.id.tv_recommend_foods);
 
         analysisButton = view.findViewById(R.id.btn_chk_analysis);
@@ -270,6 +398,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 0;
                 rangeMax = Standard.calorie * 1.2 - analysisResult.getCalorie();
+                lackNutrient = "칼로리";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 0;
@@ -290,11 +419,12 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 1;
                 rangeMax = Standard.carbohydrate * 1.2 - analysisResult.getCarbohydrate();
+                lackNutrient = "탄수화물";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 1;
             }
-            tvCab.setText("탄수회물: " + Math.round(analysisResult.getCarbohydrate()) + " g (" + tempValue + "%) " + states[stateIndex]);
+            tvCab.setText("탄수화물: " + Math.round(analysisResult.getCarbohydrate()) + " g (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getProtein() < Standard.protein * 0.7) {
                 stateIndex = 0;
@@ -310,6 +440,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 2;
                 rangeMax = Standard.protein * 1.2 - analysisResult.getProtein();
+                lackNutrient = "단백질";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 2;
@@ -330,6 +461,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 3;
                 rangeMax = Standard.fat * 1.2 - analysisResult.getFat();
+                lackNutrient = "지방";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 3;
@@ -345,15 +477,16 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 stateIndex = 2;
                 tvMo.setTextColor(Color.RED);
             }
-            tempValue = (int) (analysisResult.getMoisture() / Standard.moisture * 100);
-            if (tempValue < minValue) {
-                minValue = tempValue;
-                minColumnIndex = 4;
-                rangeMax = Standard.moisture * 1.2 - analysisResult.getMoisture();
-            } else if (tempValue > maxValue) {
-                maxValue = tempValue;
-                maxColumnIndex = 4;
-            }
+//            tempValue = (int) (analysisResult.getMoisture() / Standard.moisture * 100);
+//            if (tempValue < minValue) {
+//                minValue = tempValue;
+//                minColumnIndex = 4;
+//                rangeMax = Standard.moisture * 1.2 - analysisResult.getMoisture();
+//                lackNutrient = "수분";
+//            } else if (tempValue > maxValue) {
+//                maxValue = tempValue;
+//                maxColumnIndex = 4;
+//            }
             tvMo.setText("수분: " + Math.round(analysisResult.getMoisture()) + " ml (" + tempValue + "%) " + states[stateIndex]);
 
             if (analysisResult.getVitaminK() < Standard.vitaminD * 0.7) {
@@ -370,6 +503,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 5;
                 rangeMax = Standard.vitaminD * 1.2 - analysisResult.getVitaminK();
+                lackNutrient = "비타민K";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 5;
@@ -391,6 +525,8 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 6;
                 rangeMax = Standard.vitaminC * 1.2 - analysisResult.getVitaminC();
+                lackNutrient = "비타민C";
+
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 6;
@@ -411,6 +547,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 7;
                 rangeMax = Standard.fiber * 1.2 - analysisResult.getFiber();
+                lackNutrient = "식이섬유";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 7;
@@ -431,6 +568,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 8;
                 rangeMax = Standard.fe * 1.2 - analysisResult.getFe();
+                lackNutrient = "철분";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 8;
@@ -452,6 +590,7 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
                 minValue = tempValue;
                 minColumnIndex = 9;
                 rangeMax = Standard.salt * 1.2 - analysisResult.getSalt();
+                lackNutrient = "나트륨";
             } else if (tempValue > maxValue) {
                 maxValue = tempValue;
                 maxColumnIndex = 9;
@@ -489,18 +628,94 @@ public class FragmentCalendarChart extends Fragment implements View.OnClickListe
     }
 
     public void recommendFoods(int minIndex, int maxIndex, double rangeMax) {
-        recommendFoodResult = mukDBHelper.getRecommendFood(maxIndex, maxIndex, rangeMax);
+        recommendFoodResult = mukDBHelper.getRecommendFood(minIndex, maxIndex, rangeMax);
+
+        double nutrient = 0.0;
+        String unit = "";
+
         String temp = "";
-        if (recommendFoodResult.size()!=0){
-            for (int i =0;i<recommendFoodResult.size();i++){
+        if (recommendFoodResult.size() != 0) {
+            tvNeedNutrient.setText(lackNutrient + "이(가) 추가 섭취 필요");
+            if (recommendFoodResult.size() > 0) {
+                String subCategory = recommendFoodResult.get(0).getSubCategory();
+                int imageResource = -1;
+
+                if (Arrays.asList(icon_meat).contains(subCategory)) {
+                    imageResource = R.drawable.icon_meat;
+                } else if (Arrays.asList(icon_vege_fruit).contains(subCategory)) {
+                    imageResource = R.drawable.icon_vege_fruit;
+                } else if (Arrays.asList(icon_rice).contains(subCategory)) {
+                    imageResource = R.drawable.icon_rice;
+                } else if (Arrays.asList(icon_seafood).contains(subCategory)) {
+                    imageResource = R.drawable.icon_seafood;
+                } else if (Arrays.asList(icon_noodle).contains(subCategory)) {
+                    imageResource = R.drawable.icon_noodle;
+                } else if (Arrays.asList(icon_bread).contains(subCategory)) {
+                    imageResource = R.drawable.icon_bread;
+                } else if (Arrays.asList(icon_snack).contains(subCategory)) {
+                    imageResource = R.drawable.icon_snack;
+                } else if (Arrays.asList(icon_milk).contains(subCategory)) {
+                    imageResource = R.drawable.icon_milk;
+                } else {
+                    imageResource = R.drawable.icon_food;
+                }
+                bestFoodImage.setImageResource(imageResource);
+            } else {
+                bestFoodImage.setImageResource(R.drawable.icon_food);
+            }
+            for (int i = 0; i < recommendFoodResult.size(); i++) {
+                switch (minIndex) {
+                    case 0:
+                        nutrient = recommendFoodResult.get(i).getCalorie();
+                        unit = "kcal";
+                        break;
+                    case 1:
+                        nutrient = recommendFoodResult.get(i).getCarbohydrate();
+                        unit = "g";
+                        break;
+                    case 2:
+                        nutrient = recommendFoodResult.get(i).getProtein();
+                        unit = "g";
+                        break;
+                    case 3:
+                        nutrient = recommendFoodResult.get(i).getFat();
+                        unit = "g";
+                        break;
+                    case 4:
+                        nutrient = recommendFoodResult.get(i).getMoisture();
+                        unit = "ml";
+                        break;
+                    case 5:
+                        nutrient = recommendFoodResult.get(i).getVitaminK();
+                        unit = "㎍";
+                        break;
+                    case 6:
+                        nutrient = recommendFoodResult.get(i).getVitaminC();
+                        unit = "㎍";
+                        break;
+                    case 7:
+                        nutrient = recommendFoodResult.get(i).getFiber();
+                        unit = "g";
+                        break;
+                    case 8:
+                        nutrient = recommendFoodResult.get(i).getFe();
+                        unit = "mg";
+                        break;
+                    case 9:
+                        nutrient = recommendFoodResult.get(i).getSalt();
+                        unit = "g";
+                        break;
+                }
+
                 temp = recommendFoodResult.get(i).getName();
                 menu_name[i].setText(temp);
                 menu_name[i].setVisibility(View.VISIBLE);
-
+                menu_info[i].setText(nutrient + unit);
+                menu_info[i].setVisibility(View.VISIBLE);
                 //temp+=food.getName() + "\n";
             }
-        }else {
-            temp= "추천하는 음식이 없습니다.";
+        } else {
+            temp = "추천하는 음식이 없습니다.";
             menu_name[0].setText(temp);
             menu_name[0].setVisibility(View.VISIBLE);
         }

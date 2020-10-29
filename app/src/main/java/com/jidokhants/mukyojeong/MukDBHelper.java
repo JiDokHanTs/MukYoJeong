@@ -364,7 +364,7 @@ public class MukDBHelper extends SQLiteOpenHelper {
                 maxCol = MukDBContract.FOOD_COL_SALT;
                 break;
         }
-        selection += minCol+" <= "+rangeMax +" AND " + MukDBContract.FOOD_COL_COMM +"='품목대표'";
+        selection += minCol+" <= "+rangeMax +" AND " + MukDBContract.FOOD_COL_COMM +"='품목대표' AND " + MukDBContract.FOOD_COL_DB_GROUP+"='음식'";
         orderBy += minCol+" DESC, "+maxCol;
 
 

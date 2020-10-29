@@ -27,7 +27,7 @@ public class FragmentFeed extends Fragment {
             CMNT_SIGN = getArguments().getInt("CMNT_SIGN");
         }
         TextView feedText = view.findViewById(R.id.feed_text);
-        feedText.setText(CMNT_SIGN + "번 feed 이지롱");
+        feedText.setText(CMNT_SIGN + "번 feed 입니다.");
         return view;
     }
     
