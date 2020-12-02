@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ing_dialog_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp">
+
+    <TextView
+        android:id="@+id/ing_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="재료 선택"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <AutoCompleteTextView
+        android:id="@+id/ingd_auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:completionThreshold="2"
+        android:hint="재료 선택"
+        android:layout_below="@id/ing_dialog_title"
+        android:inputType="text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingd_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ingd_auto" />
+
+    <LinearLayout
+        android:id="@+id/btn_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/ingd_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="확인"
+            android:textColor="@color/colorDarkBlue"
+            android:layout_gravity="bottom"/>
+
+        <Button
+            android:id="@+id/ingd_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="취소"
+            android:layout_gravity="bottom"
+            android:textColor="@color/colorDarkBlue" />
+    </LinearLayout>
+
+</RelativeLayout>

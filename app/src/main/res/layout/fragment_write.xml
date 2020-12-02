@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="제목"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/commu_write_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:inputType="text"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/linear_layout_1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:text="재료" />
+
+            <EditText
+                android:id="@+id/commu_write_ing_list_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:maxLines="1"
+                android:layout_weight="30"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/commu_write_img"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="7dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/img_add_btn"
+            app:layout_constraintTop_toBottomOf="@id/linear_layout_2"
+            app:layout_constraintBottom_toTopOf="@+id/commu_write_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+
+        <EditText
+            android:id="@+id/commu_write_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:background="@android:color/transparent"
+            android:hint="레시피를 입력하세요."
+            android:inputType="textMultiLine"
+            android:minLines="8"
+            app:layout_constraintBottom_toTopOf="@+id/commu_write_submit_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commu_write_img" />
+
+        <Button
+            android:id="@+id/commu_write_submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorDarkBlue"
+            android:text="등록하기"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commu_write_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

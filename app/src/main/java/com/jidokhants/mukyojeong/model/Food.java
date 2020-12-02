@@ -43,6 +43,9 @@ public class Food {
     private double omega3FattyAcids;
     private double omega6FattyAcids;
 
+    public Food() {
+    }
+
     public Food(int id) {
         this.id = id;
     }

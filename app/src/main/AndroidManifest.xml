@@ -2,30 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jidokhants.mukyojeong">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_myj"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_myj_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".AfterActivity"/>
+        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.AfterActivity"/>
+        <activity android:name=".activities.login.LoginActivity" />
     </application>
 
 </manifest>

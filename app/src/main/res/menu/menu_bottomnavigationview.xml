@@ -6,23 +6,23 @@
         app:showAsAction="always"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_calendar_today_24"
-        android:title="calendar"/>
+        android:title="Calendar"/>
     <item
         android:id="@+id/communityItem"
         app:showAsAction="always"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_people_24"
-        android:title="community"/>
+        android:title="Community"/>
     <item
         android:id="@+id/notificationItem"
         app:showAsAction="always"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_notifications_24"
-        android:title="notification"/>
+        android:title="Notification"/>
     <item
         android:id="@+id/settingItem"
         app:showAsAction="always"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="setting"/>
+        android:title="Setting"/>
 </menu>

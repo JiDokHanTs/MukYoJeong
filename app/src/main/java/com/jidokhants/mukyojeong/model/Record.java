@@ -1,8 +1,5 @@
 package com.jidokhants.mukyojeong.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Record {
     private int id;
     private String date;
