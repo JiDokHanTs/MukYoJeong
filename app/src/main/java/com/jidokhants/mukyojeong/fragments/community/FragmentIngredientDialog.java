@@ -152,7 +152,7 @@ public class FragmentIngredientDialog extends DialogFragment implements View.OnC
             case R.id.ingd_btn_ok:
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra("ingredients", ingredients);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                getTargetFragment().onActivityResult(7777, Activity.RESULT_OK, intent);
 //                ((FragmentWrite)getTargetFragment()).setIngredients(ingredients);
 //                ((MainActivity)getActivity()).ingredientsFrom(ingredients);
 //                ingdListAdapter.resetList();

@@ -19,12 +19,23 @@ public class FragmentCalendar extends Fragment {
 
     FragmentPagerAdapter adapterViewPager;
 
+    public static FragmentCalendar newInstance(){
+        FragmentCalendar fragment = new FragmentCalendar();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         ((MainActivity)getActivity()).showSearchMenu(false);
         ((MainActivity)getActivity()).showWriteMenu(false);
+        ((MainActivity)getActivity()).setActionbarshow();
+
     }
 
     @Nullable

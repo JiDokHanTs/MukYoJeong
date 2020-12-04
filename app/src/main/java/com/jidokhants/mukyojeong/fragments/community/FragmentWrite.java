@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jidokhants.mukyojeong.R;
 import com.jidokhants.mukyojeong.activities.MainActivity;
+import com.jidokhants.mukyojeong.data.MukDBHelper;
 import com.jidokhants.mukyojeong.model.Comment;
 import com.jidokhants.mukyojeong.model.Food;
 import com.jidokhants.mukyojeong.model.Ingredient;
@@ -68,6 +67,7 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
     DatabaseReference mDatabase;
 
     Uri imageFilePath;
+    MukDBHelper mukDBHelper;
 
     public static FragmentWrite newInstance() {
         FragmentWrite fragment = new FragmentWrite();
@@ -283,11 +283,11 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
                                 int id = index + 1;
 
                                 Food food = new Food(id, dBGroup, commercial, name, from, subCategory, finalServingSize, unit, finalTotalGram, finalTotalML, finalCalorie, finalMoisture, finalProtein, finalFat, finalCarbohydrate, finalSugars, finalFiber, finalCalcium, finalFe, finalMagnesium, finalPhosphorus, finalPotassium, finalSalt, finalZinc, finalCopper, finalManganese, finalSelenium, finalIodine, finalChlorine, finalVitaminA, finalVitaminARE, finalRetinol, finalBetaCarotene, finalVitaminD, finalVitaminK, finalPanto, finalVitaminB, finalBiotin, finalVitaminC, finalOmega3FattyAcids, finalOmega6FattyAcids);
-                                mDatabase.child("foods").push().setValue(food);
+                                mDatabase.child("foods").child("food").push().setValue(food);
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("foods/index", id);
                                 mDatabase.updateChildren(map);
-                                Post post = new Post(title, writer, date, content, imgPath, ingredients, food, comments, null);
+                                Post post = new Post(title, writer, date, content, imgPath, ingredients, food, comments, new ArrayList<String>());
                                 mDatabase.child("posts").push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -296,8 +296,11 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
                                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                         fragmentTransaction.replace(R.id.frameLayout, fragmentCommunity).commit();
+                                        ((MainActivity)getActivity()).updateFoodsInLocal();
+                                        ((MainActivity)getActivity()).setActionbarshow();
                                     }
                                 });
+
                             }
 
                             @Override

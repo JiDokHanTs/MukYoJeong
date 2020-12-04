@@ -2,8 +2,10 @@ package com.jidokhants.mukyojeong.activities;
 
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -70,20 +73,28 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
 
     MukDBHelper mukDBHelper;
+    TextView toolbarTitle;
+
+    SearchView searchView;
     private DatabaseReference databaseReference;
     private Menu mMenu;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.app_toolbar);
+        try {
+            if(!isExistFoodDB()){
+                copyFoodDB();
+            }
+        }catch (Exception e){
+        }
+        toolbar = findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setActionbarshow();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,29 +103,33 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         mukDBHelper = MukDBHelper.getInstance(MainActivity.this);
-        fragmentCalendar = new FragmentCalendar();
-        fragmentCommunity = new FragmentCommunity();
+        fragmentCalendar = FragmentCalendar.newInstance();
+        fragmentCommunity = FragmentCommunity.newInstance(null);
 
         fragmentWrite = new FragmentWrite();
         fragmentNotifications = new FragmentNotifications();
         fragmentSetting = new FragmentSetting();
 
-        updateFoodsInLocal();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentCalendar).commitAllowingStateLoss();
 
         showSearchMenu(false);
         showWriteMenu(false);
-
+        toolbarTitle =  findViewById(R.id.toolbar_title);
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                String textTitle ="";
+                toolbar.collapseActionView();
                 switch (menuItem.getItemId()) {
                     case R.id.calnedarItem:
+                        fragmentCalendar = FragmentCalendar.newInstance();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frameLayout, fragmentCalendar).commitAllowingStateLoss();
                         break;
                     case R.id.communityItem:
+                        fragmentCommunity = FragmentCommunity.newInstance(null);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frameLayout, fragmentCommunity).commitAllowingStateLoss();
                         break;
@@ -126,8 +141,14 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
                         break;
+                    default:
+                       textTitle = "MukYoJeong";
+                    break;
                 }
-                TextView toolbarTitle =  findViewById(R.id.toolbar_title);
+
+                if (menuItem.getTitle()==null){
+                    toolbarTitle.setText(textTitle);
+                }
                 toolbarTitle.setText(menuItem.getTitle());
                 return true;
             }
@@ -138,11 +159,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;
+                if (searchView!=null){
+                    setSearchviewClose();
+                }
                 switch (menuItem.getItemId()) {
                     case R.id.calnedarItem:
+                        fragmentCalendar = FragmentCalendar.newInstance();
                         fragment = fragmentCalendar;
                         break;
                     case R.id.communityItem:
+                        fragmentCommunity = FragmentCommunity.newInstance(null);
                         fragment = fragmentCommunity;
                         break;
                     case R.id.notificationItem:
@@ -158,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
 //                menuItem.setChecked(true);
-                TextView toolbarTitle =  findViewById(R.id.toolbar_title);
                 toolbarTitle.setText(menuItem.getTitle());
                 drawerLayout.closeDrawers();
                 return true;
@@ -168,20 +193,20 @@ public class MainActivity extends AppCompatActivity {
         View navHeader = leftNavigationView.getHeaderView(0);
         TextView tvProfileName = navHeader.findViewById(R.id.nav_profile_name);
         TextView tvProfileEmail = navHeader.findViewById(R.id.nav_profile_email);
+        ImageView tvProfileImg = navHeader.findViewById(R.id.nav_profile_img);
+
         String name="";
         String email="";
+        Uri photoUri;
         if(currentUser != null){
             name = currentUser.getDisplayName();
             email = currentUser.getEmail();
+            photoUri = currentUser.getPhotoUrl();
             tvProfileName.setText(name);
             tvProfileEmail.setText(email);
+            Glide.with(this).load(photoUri).into(tvProfileImg);
         }
-        try {
-            if(!isExistFoodDB()){
-                copyFoodDB();
-            }
-        }catch (Exception e){
-        }
+
     }
 
     @Override
@@ -189,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView)searchItem.getActionView();
+        searchView = (SearchView)searchItem.getActionView();
 
         ImageView resetIcon = (ImageView) searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         resetIcon.setImageResource(R.drawable.ic_action_reset);
@@ -203,9 +228,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 if (query != null){
                     Log.d(TAG, "Query: "+query);
+                    fragmentCommunity = FragmentCommunity.newInstance(query);
+                    replaceCommunityFragment(fragmentCommunity);
                     searchView.clearFocus();
                  }
-                return true;
+                return false;
             }
 
             @Override
@@ -221,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_write:
                 FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentWrite = FragmentWrite.newInstance();
                 fragmentManager.beginTransaction().replace(R.id.frameLayout, fragmentWrite).commit();
                 getSupportActionBar().hide();
                 FrameLayout frameLayout = findViewById(R.id.frameLayout);
@@ -232,7 +260,20 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void setActionbarshow(){
+        TypedValue tv = new TypedValue();
+        int actionbarSize = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+        {
+            actionbarSize = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
 
+        FrameLayout frameLayout = findViewById(R.id.frameLayout);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)frameLayout.getLayoutParams();
+        params.topMargin = actionbarSize;
+        params.bottomMargin = actionbarSize;
+        frameLayout.setLayoutParams(params);
+    }
     public void showSearchMenu(boolean isShow){
         if (mMenu == null)return;
         mMenu.setGroupVisible(R.id.action_search_group, isShow);
@@ -300,17 +341,19 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
+    public void replaceCommunityPostFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment).commit();
+    }
     public void replaceCalendarFragment(Fragment fragment){
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment).commit();
     }
 
-    public void replaceCommunityFragment(int cmntSign, Fragment fragment){
-        Bundle args = new Bundle();
-        args.putInt("CMNT_SIGN", cmntSign);
-        fragment.setArguments(args);
+    public void replaceCommunityFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -323,22 +366,40 @@ public class MainActivity extends AppCompatActivity {
 //    public ArrayList<Ingredient> getIngredientsFromWriter(){
 //        return fragmentWrite.getIngredientsFromEdit();
 //    }
+    public void setSearchviewClose(){
+        searchView.setIconified(true);
+    }
     public void ingredientsFrom(ArrayList<Ingredient> temp){
         fragmentWrite.setIngredients(temp);
     }
     public void updateFoodsInLocal(){
-        int savedFoodIndex = mukDBHelper.getMaxFoodId();
-
+        final int savedFoodIndex = mukDBHelper.getMaxFoodId();
+        Log.d("UPDATEFOODINLOCAL", "called");
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        databaseReference.child("foods").child("food").orderByChild("food_id").startAt(savedFoodIndex+1).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("foods").child("index").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Food food = dataSnapshot.getValue(Food.class);
-                    mukDBHelper.insertFood(food);
+                int lastIndex = Integer.valueOf(snapshot.getValue().toString());
+                Log.d("UPDATE FOOD DB", "1: "+lastIndex+", 2: "+savedFoodIndex);
+                if (lastIndex - savedFoodIndex > 0){
+                    databaseReference.child("foods").child("food").limitToLast(lastIndex - savedFoodIndex).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                Food food = dataSnapshot.getValue(Food.class);
+                                Log.d("UPDATE FOODS", food.getName());
+                                mukDBHelper.insertFood(food);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("FOODDB UPDATE ERROR", error.getMessage());
+                        }
+                    });
                 }
-            }
+                }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -358,4 +419,5 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
 }

@@ -19,6 +19,7 @@ public class FragmentNotifications extends Fragment {
         super.onResume();
         ((MainActivity)getActivity()).showSearchMenu(false);
         ((MainActivity)getActivity()).showWriteMenu(false);
+        ((MainActivity)getActivity()).setActionbarshow();
 
     }
 

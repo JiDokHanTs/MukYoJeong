@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jidokhants.mukyojeong.activities.MainActivity;
 import com.jidokhants.mukyojeong.data.MukDBHelper;
 import com.jidokhants.mukyojeong.R;
 import com.jidokhants.mukyojeong.model.FoodItem;
@@ -48,13 +49,17 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
         return new FragmentInsertDiet();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_calendar_insert_diet, container, false);
 
         Items = new ArrayList<>();
-
         tv_meal = view.findViewById(R.id.text_meal_diet);
 
         final AutoCompleteTextView autoCompleteInsertText = view.findViewById(R.id.auto_complete_insert_diet);
@@ -79,7 +84,7 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
 
         foodList = mukDBHelper.getSearchAllFood();
 
-        AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getActivity(), foodList);
+        final AutoCompleteAdapter autoCompleteTestAdapter = new AutoCompleteAdapter(getActivity(), foodList);
         autoCompleteInsertText.setAdapter(autoCompleteTestAdapter);
         autoCompleteInsertText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,6 +92,20 @@ public class FragmentInsertDiet extends Fragment implements View.OnClickListener
                 selectedFood = (FoodItem) parent.getItemAtPosition(position);
             }
         });
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ((MainActivity)getActivity()).updateFoodsInLocal();
+//                        foodList = mukDBHelper.getSearchAllFood();
+//                        autoCompleteTestAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//        });
+
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
