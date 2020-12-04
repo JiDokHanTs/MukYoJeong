@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/insert_diet_box1"
+        android:paddingHorizontal="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/toggleButton1"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector1"
+            android:scaleType="fitCenter"
+            android:textOff=""
+            android:textOn="" />
+
+        <Button
+            android:id="@+id/toggleButton2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector2"
+            android:scaleType="fitCenter"
+            android:textOff=""
+            android:textOn="" />
+
+        <Button
+            android:id="@+id/toggleButton3"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector3"
+            android:scaleType="fitCenter"
+            android:textOff=""
+            android:textOn="" />
+
+        <Button
+            android:id="@+id/toggleButton4"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/cal_button_selector4"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:textOn=""
+            android:textOff=""/>
+
+        <Button
+            android:id="@+id/toggleButton5"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector5"
+            android:scaleType="fitCenter"
+            android:textOn=""
+            android:textOff=""/>
+
+        <Button
+            android:id="@+id/toggleButton6"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/cal_button_selector6"
+            android:scaleType="fitCenter"
+            android:textOn=""
+            android:textOff=""/>
+    </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+        android:layout_marginBottom="2dp"
+          android:paddingHorizontal="25dp"
+        android:background="@drawable/insert_diet_box2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_meal_diet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="오늘의 아침"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_menu_diet"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center_horizontal">
+
+              <ImageView
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:src="@drawable/ic_add"
+                  android:layout_gravity="center_vertical" />
+
+              <AutoCompleteTextView
+                  android:id="@+id/auto_complete_insert_diet"
+                  android:layout_width="0dp"
+                  android:layout_weight="7"
+                  android:textSize="20dp"
+                  android:completionThreshold="1"
+                  android:layout_height="wrap_content"
+                  android:hint="메뉴를 입력하세요." />
+
+              <Button
+                  android:id="@+id/btn_add_diet"
+                  android:layout_width="0dp"
+                  android:layout_weight="2"
+                  android:layout_height="35dp"
+                  android:text="추가"
+                  android:textSize="20dp"
+                  android:textColor="@android:color/white"
+                  android:background="@drawable/btn_insert_bg"
+                  android:layout_gravity="center" />
+          </LinearLayout>
+
+      </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

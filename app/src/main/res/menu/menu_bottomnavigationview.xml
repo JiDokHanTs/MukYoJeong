@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/calnedarItem"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="Calendar"/>
+    <item
+        android:id="@+id/communityItem"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="Community"/>
+    <item
+        android:id="@+id/notificationItem"
+        app:showAsAction="always"
+        android:visible="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Notification"/>
+    <item
+        android:id="@+id/settingItem"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Setting"/>
+</menu>

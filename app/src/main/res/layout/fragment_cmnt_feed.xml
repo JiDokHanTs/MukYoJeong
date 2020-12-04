@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/commu_post_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/commu_post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="김치볶음밥"
+                android:textSize="25sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+
+                android:padding="5dp">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/commu_post_writer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="작성자: MukYoJeong" />
+
+                    <TextView
+                        android:id="@+id/commu_post_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="2020.11.24" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+            <TextView
+                android:id="@+id/commu_post_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="재료: "
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/commu_post_recipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackground"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/commu_post_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/commu_temp_img" />
+
+            <TextView
+                android:id="@+id/commu_post_recipe_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="40dp"
+                android:text="레시피"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.github.mikephil.charting.charts.RadarChart
+                android:id="@+id/post_radarchart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:paddingTop="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+
+                android:text="영양소 성분"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/commu_post_kcal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="총 열량: " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+            <TextView
+                android:id="@+id/commu_post_carbo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="탄수화물: " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+            <TextView
+                android:id="@+id/commu_post_protein"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="단백질: " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+            <TextView
+                android:id="@+id/commu_post_fat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지방: " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+            <TextView
+                android:id="@+id/commu_post_vitaK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="비타민K: " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#aaaaaa" />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <CheckBox
+                android:id="@+id/commu_post_like_ckb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/like_button_status" />
+
+            <TextView
+                android:id="@+id/commu_post_like_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="좋아요 180개" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_baseline_comment_24" />
+
+            <TextView
+                android:id="@+id/commu_post_comments_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="댓글 100개" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
